@@ -16,6 +16,7 @@
 
         <div class="admin-content" id="adminContent">
             <p class="admin-title">Panel rápido</p>
+            <p class="admin-status" id="firebaseStatus">Firebase: pendiente de configurar</p>
             <button type="button">Editar Inicio</button>
             <button type="button">Editar Historia</button>
             <button type="button">Editar Colecciones</button>
@@ -46,8 +47,8 @@
         <section class="hero section-card" id="inicio">
             <div class="hero-copy">
                 <span class="eyebrow">Diseño, comodidad y calidad</span>
-                <h2>JR Soluciones</h2>
-                <p class="hero-description">
+                <h2 data-bind="heroTitle">JR Soluciones</h2>
+                <p class="hero-description" data-bind="heroDescription">
                     Amueblamos tus espacios con estilo, durabilidad y atención cercana. Encuentra muebles para tu hogar,
                     oficina o negocio con el toque elegante que distingue a la marca.
                 </p>
@@ -56,8 +57,8 @@
                     <div class="qr-card">
                         <img src="img/qr-placeholder.svg" alt="Código QR de ejemplo" class="qr-image">
                         <div>
-                            <p class="qr-kicker">Llévatelo con</p>
-                            <strong>0% de inicial</strong>
+                            <p class="qr-kicker" data-bind="qrKicker">Llévatelo con</p>
+                            <strong data-bind="qrOffer">0% de inicial</strong>
                         </div>
                     </div>
 
@@ -74,29 +75,29 @@
             <article class="highlight-card">
                 <img src="img/product-1.svg" alt="Producto destacado 1">
                 <div>
-                    <h3>Sofá modular</h3>
-                    <p>Confort amplio para salas modernas y familiares.</p>
+                    <h3 data-bind="feature1Title">Sofá modular</h3>
+                    <p data-bind="feature1Description">Confort amplio para salas modernas y familiares.</p>
                 </div>
             </article>
             <article class="highlight-card">
                 <img src="img/product-2.svg" alt="Producto destacado 2">
                 <div>
-                    <h3>Juego de comedor</h3>
-                    <p>Una opción elegante para reuniones y comidas.</p>
+                    <h3 data-bind="feature2Title">Juego de comedor</h3>
+                    <p data-bind="feature2Description">Una opción elegante para reuniones y comidas.</p>
                 </div>
             </article>
             <article class="highlight-card">
                 <img src="img/product-3.svg" alt="Producto destacado 3">
                 <div>
-                    <h3>Silla ejecutiva</h3>
-                    <p>Diseñada para jornadas cómodas en oficina.</p>
+                    <h3 data-bind="feature3Title">Silla ejecutiva</h3>
+                    <p data-bind="feature3Description">Diseñada para jornadas cómodas en oficina.</p>
                 </div>
             </article>
             <article class="highlight-card">
                 <img src="img/product-4.svg" alt="Producto destacado 4">
                 <div>
-                    <h3>Centro de TV</h3>
-                    <p>Organización y estilo para tu entretenimiento.</p>
+                    <h3 data-bind="feature4Title">Centro de TV</h3>
+                    <p data-bind="feature4Description">Organización y estilo para tu entretenimiento.</p>
                 </div>
             </article>
         </section>
@@ -116,16 +117,16 @@
                 <article class="story-card">
                     <img src="img/story-1.svg" alt="Imagen de ejemplo de una sala">
                     <div>
-                        <h3>Origen</h3>
-                        <p>Un emprendimiento construido paso a paso, con enfoque en la calidad y el servicio.</p>
+                        <h3 data-bind="story1Title">Origen</h3>
+                        <p data-bind="story1Description">Un emprendimiento construido paso a paso, con enfoque en la calidad y el servicio.</p>
                     </div>
                 </article>
 
                 <article class="story-card">
                     <img src="img/story-2.svg" alt="Imagen de ejemplo de muebles">
                     <div>
-                        <h3>Crecimiento</h3>
-                        <p>La variedad de estilos y colecciones fue aumentando para responder a más necesidades.</p>
+                        <h3 data-bind="story2Title">Crecimiento</h3>
+                        <p data-bind="story2Description">La variedad de estilos y colecciones fue aumentando para responder a más necesidades.</p>
                     </div>
                 </article>
             </div>
@@ -144,23 +145,23 @@
             <div class="collection-grid">
                 <article class="collection-card">
                     <img src="img/collection-1.svg" alt="Colección sala">
-                    <h3>Sala Estilo Urbano</h3>
-                    <p>Sofás y mesas auxiliares pensadas para espacios modernos.</p>
+                    <h3 data-bind="collection1Title">Sala Estilo Urbano</h3>
+                    <p data-bind="collection1Description">Sofás y mesas auxiliares pensadas para espacios modernos.</p>
                 </article>
                 <article class="collection-card">
                     <img src="img/collection-2.svg" alt="Colección comedor">
-                    <h3>Comedor Premium</h3>
-                    <p>Piezas elegantes para compartir en familia o en negocios.</p>
+                    <h3 data-bind="collection2Title">Comedor Premium</h3>
+                    <p data-bind="collection2Description">Piezas elegantes para compartir en familia o en negocios.</p>
                 </article>
                 <article class="collection-card">
                     <img src="img/collection-3.svg" alt="Colección oficina">
-                    <h3>Oficina Pro</h3>
-                    <p>Escritorios, sillas y soporte para productividad diaria.</p>
+                    <h3 data-bind="collection3Title">Oficina Pro</h3>
+                    <p data-bind="collection3Description">Escritorios, sillas y soporte para productividad diaria.</p>
                 </article>
                 <article class="collection-card">
                     <img src="img/collection-4.svg" alt="Colección descanso">
-                    <h3>Descanso Confort</h3>
-                    <p>Opciones de dormitorio pensadas para descansar mejor.</p>
+                    <h3 data-bind="collection4Title">Descanso Confort</h3>
+                    <p data-bind="collection4Description">Opciones de dormitorio pensadas para descansar mejor.</p>
                 </article>
             </div>
         </section>
@@ -173,16 +174,16 @@
 
             <div class="about-grid">
                 <article class="info-card">
-                    <h3>Misión</h3>
-                    <p>Ofrecer muebles de calidad y una atención cercana que ayude a cada cliente a amueblar su espacio ideal.</p>
+                    <h3 data-bind="missionTitle">Misión</h3>
+                    <p data-bind="missionDescription">Ofrecer muebles de calidad y una atención cercana que ayude a cada cliente a amueblar su espacio ideal.</p>
                 </article>
                 <article class="info-card">
-                    <h3>Visión</h3>
-                    <p>Ser una mueblería reconocida por su estilo, confianza y capacidad de adaptarse a las necesidades del mercado.</p>
+                    <h3 data-bind="visionTitle">Visión</h3>
+                    <p data-bind="visionDescription">Ser una mueblería reconocida por su estilo, confianza y capacidad de adaptarse a las necesidades del mercado.</p>
                 </article>
                 <article class="info-card">
-                    <h3>Valores</h3>
-                    <p>Honestidad, compromiso, buen gusto, responsabilidad y servicio personalizado.</p>
+                    <h3 data-bind="valuesTitle">Valores</h3>
+                    <p data-bind="valuesDescription">Honestidad, compromiso, buen gusto, responsabilidad y servicio personalizado.</p>
                 </article>
             </div>
         </section>
@@ -191,13 +192,13 @@
             <img src="img/owner-placeholder.svg" alt="Foto del propietario" class="owner-photo">
             <div class="owner-content">
                 <span class="eyebrow">Propietario</span>
-                <h2>Juan Rodríguez</h2>
-                <p class="owner-role">Propietario y Gerente General</p>
-                <p><strong>Celular:</strong> <a href="tel:+18095550123">+1 (809) 555-0123</a></p>
+                <h2 data-bind="ownerName">Juan Rodríguez</h2>
+                <p class="owner-role" data-bind="ownerRole">Propietario y Gerente General</p>
+                <p><strong>Celular:</strong> <a href="tel:+18095550123" data-bind="ownerPhone">+1 (809) 555-0123</a></p>
                 <a class="btn-whatsapp" href="https://wa.me/18095550123" target="_blank" rel="noopener noreferrer">
                     WhatsApp
                 </a>
-                <p class="owner-address"><strong>Dirección:</strong> Calle Principal #123, Santo Domingo, República Dominicana</p>
+                <p class="owner-address"><strong>Dirección:</strong> <span data-bind="ownerAddress">Calle Principal #123, Santo Domingo, República Dominicana</span></p>
             </div>
         </section>
     </main>
@@ -206,6 +207,6 @@
         <p>Desarrollado por AR Multimedia Services</p>
     </footer>
 
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
