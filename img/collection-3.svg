@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Colección oficina">
+  <rect width="720" height="520" rx="28" fill="#eef3f8"/>
+  <rect x="180" y="110" width="220" height="180" rx="24" fill="#17324d"/>
+  <rect x="390" y="140" width="120" height="150" rx="24" fill="#24527a"/>
+  <rect x="200" y="290" width="340" height="38" rx="16" fill="#c79a64"/>
+  <rect x="222" y="328" width="24" height="110" rx="10" fill="#8c6239"/>
+  <rect x="494" y="328" width="24" height="110" rx="10" fill="#8c6239"/>
+  <circle cx="455" cy="130" r="22" fill="#d8a03a"/>
+</svg>

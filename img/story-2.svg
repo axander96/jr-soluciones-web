@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-label="Historia 2">
+  <rect width="720" height="480" rx="28" fill="#f7f1e8"/>
+  <rect x="95" y="100" width="150" height="220" rx="20" fill="#17324d"/>
+  <rect x="285" y="80" width="160" height="260" rx="22" fill="#24527a"/>
+  <rect x="475" y="120" width="150" height="200" rx="20" fill="#d8a03a"/>
+  <circle cx="170" cy="370" r="34" fill="#24527a"/>
+  <circle cx="360" cy="370" r="34" fill="#17324d"/>
+  <circle cx="550" cy="370" r="34" fill="#8c6239"/>
+</svg>

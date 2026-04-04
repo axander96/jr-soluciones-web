@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Silla ejecutiva">
+  <rect width="640" height="420" rx="28" fill="#eef3f8"/>
+  <rect x="270" y="92" width="110" height="180" rx="46" fill="#17324d"/>
+  <rect x="255" y="244" width="140" height="80" rx="30" fill="#24527a"/>
+  <rect x="286" y="318" width="16" height="54" rx="8" fill="#17324d"/>
+  <rect x="338" y="318" width="16" height="54" rx="8" fill="#17324d"/>
+  <path d="M210 334c40-45 180-45 220 0" fill="none" stroke="#8fa6bb" stroke-width="16" stroke-linecap="round"/>
+  <path d="M320 270v70" stroke="#8fa6bb" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="320" cy="350" r="34" fill="#d8a03a"/>
+</svg>

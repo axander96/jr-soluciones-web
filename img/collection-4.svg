@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Colección descanso">
+  <rect width="720" height="520" rx="28" fill="#f4efe6"/>
+  <rect x="110" y="180" width="500" height="130" rx="44" fill="#24527a"/>
+  <rect x="90" y="220" width="80" height="100" rx="30" fill="#17324d"/>
+  <rect x="550" y="220" width="80" height="100" rx="30" fill="#17324d"/>
+  <rect x="220" y="140" width="280" height="50" rx="20" fill="#d8a03a"/>
+  <circle cx="600" cy="110" r="34" fill="#d8a03a" opacity="0.9"/>
+</svg>
