@@ -12,5 +12,5 @@ export const firebaseConfig = {
 };
 
 export const adminConfig = {
-    adminEmail: "alexanderrodriguez@aramultimedias.com",
+    adminEmail: "penag6129@gmail.com",
 };
