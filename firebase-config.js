@@ -3,11 +3,10 @@
 // No es un secreto, pero sí debe coincidir exactamente con tu proyecto.
 
 export const firebaseConfig = {
-    apiKey: "REPLACE_ME",
-    authDomain: "REPLACE_ME",
-    projectId: "REPLACE_ME",
-    storageBucket: "REPLACE_ME",
-    messagingSenderId: "REPLACE_ME",
-    appId: "REPLACE_ME",
-    measurementId: "REPLACE_ME",
+    apiKey: "AIzaSyBeB70YP2F7psyGyzBlI698daqGpW-G654",
+    authDomain: "jr-soluciones-web.firebaseapp.com",
+    projectId: "jr-soluciones-web",
+    storageBucket: "jr-soluciones-web.firebasestorage.app",
+    messagingSenderId: "125725355287",
+    appId: "1:125725355287:web:f3249ef12add38ec539b52",
 };
