@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "jr-soluciones-web"
+  },
+  "targets": {
+    "jr-soluciones-web": {
+      "hosting": {
+        "web": [
+          "jr-soluciones-web"
+        ]
+      }
+    }
   }
 }
