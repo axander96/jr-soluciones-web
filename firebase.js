@@ -1,6 +1,12 @@
 import { firebaseConfig } from "./firebase-config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut as firebaseSignOut,
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+import {
     doc,
     getDoc,
     getFirestore,
@@ -15,6 +21,7 @@ const isReady = (config) =>
 
 let app = null;
 let db = null;
+let auth = null;
 
 export function initFirebase() {
     if (!isReady(firebaseConfig)) {
@@ -24,13 +31,45 @@ export function initFirebase() {
     if (!app) {
         app = initializeApp(firebaseConfig);
         db = getFirestore(app);
+        auth = getAuth(app);
     }
 
-    return { app, db };
+    return { app, db, auth };
 }
 
 export function getFirebaseStatus() {
     return isReady(firebaseConfig) ? "Firebase conectado" : "Firebase pendiente de configurar";
+}
+
+export function onFirebaseAuthChange(callback) {
+    const services = initFirebase();
+
+    if (!services?.auth) {
+        callback(null);
+        return () => {};
+    }
+
+    return onAuthStateChanged(services.auth, callback);
+}
+
+export async function loginWithEmail(email, password) {
+    const services = initFirebase();
+
+    if (!services?.auth) {
+        throw new Error("Firebase no está configurado.");
+    }
+
+    return signInWithEmailAndPassword(services.auth, email, password);
+}
+
+export async function logout() {
+    const services = initFirebase();
+
+    if (!services?.auth) {
+        return;
+    }
+
+    await firebaseSignOut(services.auth);
 }
 
 export async function loadSiteContent() {

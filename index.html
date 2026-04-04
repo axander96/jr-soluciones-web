@@ -17,12 +17,9 @@
         <div class="admin-content" id="adminContent">
             <p class="admin-title">Panel rápido</p>
             <p class="admin-status" id="firebaseStatus">Firebase: pendiente de configurar</p>
-            <button type="button">Editar Inicio</button>
-            <button type="button">Editar Historia</button>
-            <button type="button">Editar Colecciones</button>
-            <button type="button">Editar Nosotros</button>
-            <button type="button">Cambiar QR</button>
-            <button type="button">Cambiar contacto</button>
+            <button type="button" id="adminLoginBtn">Iniciar sesión</button>
+            <button type="button" id="adminEditBtn" hidden>Editar contenido</button>
+            <button type="button" id="adminLogoutBtn" hidden>Cerrar sesión</button>
         </div>
     </aside>
 
@@ -55,7 +52,7 @@
 
                 <div class="hero-cta">
                     <div class="qr-card">
-                        <img src="img/qr-placeholder.svg" alt="Código QR de ejemplo" class="qr-image">
+                        <img src="img/qr-placeholder.svg" alt="Código QR de ejemplo" class="qr-image" data-src-bind="qrImage">
                         <div>
                             <p class="qr-kicker" data-bind="qrKicker">Llévatelo con</p>
                             <strong data-bind="qrOffer">0% de inicial</strong>
@@ -67,34 +64,34 @@
             </div>
 
             <div class="hero-visual">
-                <img src="img/hero-placeholder.svg" alt="Sala de ejemplo con mobiliario moderno" class="hero-image">
+                <img src="img/hero-placeholder.svg" alt="Sala de ejemplo con mobiliario moderno" class="hero-image" data-src-bind="heroImage">
             </div>
         </section>
 
         <section class="section-card highlights">
             <article class="highlight-card">
-                <img src="img/product-1.svg" alt="Producto destacado 1">
+                <img src="img/product-1.svg" alt="Producto destacado 1" data-src-bind="feature1Image">
                 <div>
                     <h3 data-bind="feature1Title">Sofá modular</h3>
                     <p data-bind="feature1Description">Confort amplio para salas modernas y familiares.</p>
                 </div>
             </article>
             <article class="highlight-card">
-                <img src="img/product-2.svg" alt="Producto destacado 2">
+                <img src="img/product-2.svg" alt="Producto destacado 2" data-src-bind="feature2Image">
                 <div>
                     <h3 data-bind="feature2Title">Juego de comedor</h3>
                     <p data-bind="feature2Description">Una opción elegante para reuniones y comidas.</p>
                 </div>
             </article>
             <article class="highlight-card">
-                <img src="img/product-3.svg" alt="Producto destacado 3">
+                <img src="img/product-3.svg" alt="Producto destacado 3" data-src-bind="feature3Image">
                 <div>
                     <h3 data-bind="feature3Title">Silla ejecutiva</h3>
                     <p data-bind="feature3Description">Diseñada para jornadas cómodas en oficina.</p>
                 </div>
             </article>
             <article class="highlight-card">
-                <img src="img/product-4.svg" alt="Producto destacado 4">
+                <img src="img/product-4.svg" alt="Producto destacado 4" data-src-bind="feature4Image">
                 <div>
                     <h3 data-bind="feature4Title">Centro de TV</h3>
                     <p data-bind="feature4Description">Organización y estilo para tu entretenimiento.</p>
@@ -115,7 +112,7 @@
 
             <div class="story-grid">
                 <article class="story-card">
-                    <img src="img/story-1.svg" alt="Imagen de ejemplo de una sala">
+                    <img src="img/story-1.svg" alt="Imagen de ejemplo de una sala" data-src-bind="story1Image">
                     <div>
                         <h3 data-bind="story1Title">Origen</h3>
                         <p data-bind="story1Description">Un emprendimiento construido paso a paso, con enfoque en la calidad y el servicio.</p>
@@ -123,7 +120,7 @@
                 </article>
 
                 <article class="story-card">
-                    <img src="img/story-2.svg" alt="Imagen de ejemplo de muebles">
+                    <img src="img/story-2.svg" alt="Imagen de ejemplo de muebles" data-src-bind="story2Image">
                     <div>
                         <h3 data-bind="story2Title">Crecimiento</h3>
                         <p data-bind="story2Description">La variedad de estilos y colecciones fue aumentando para responder a más necesidades.</p>
@@ -144,22 +141,22 @@
 
             <div class="collection-grid">
                 <article class="collection-card">
-                    <img src="img/collection-1.svg" alt="Colección sala">
+                    <img src="img/collection-1.svg" alt="Colección sala" data-src-bind="collection1Image">
                     <h3 data-bind="collection1Title">Sala Estilo Urbano</h3>
                     <p data-bind="collection1Description">Sofás y mesas auxiliares pensadas para espacios modernos.</p>
                 </article>
                 <article class="collection-card">
-                    <img src="img/collection-2.svg" alt="Colección comedor">
+                    <img src="img/collection-2.svg" alt="Colección comedor" data-src-bind="collection2Image">
                     <h3 data-bind="collection2Title">Comedor Premium</h3>
                     <p data-bind="collection2Description">Piezas elegantes para compartir en familia o en negocios.</p>
                 </article>
                 <article class="collection-card">
-                    <img src="img/collection-3.svg" alt="Colección oficina">
+                    <img src="img/collection-3.svg" alt="Colección oficina" data-src-bind="collection3Image">
                     <h3 data-bind="collection3Title">Oficina Pro</h3>
                     <p data-bind="collection3Description">Escritorios, sillas y soporte para productividad diaria.</p>
                 </article>
                 <article class="collection-card">
-                    <img src="img/collection-4.svg" alt="Colección descanso">
+                    <img src="img/collection-4.svg" alt="Colección descanso" data-src-bind="collection4Image">
                     <h3 data-bind="collection4Title">Descanso Confort</h3>
                     <p data-bind="collection4Description">Opciones de dormitorio pensadas para descansar mejor.</p>
                 </article>
@@ -189,19 +186,56 @@
         </section>
 
         <section class="section-card owner">
-            <img src="img/owner-placeholder.svg" alt="Foto del propietario" class="owner-photo">
+            <img src="img/owner-placeholder.svg" alt="Foto del propietario" class="owner-photo" data-src-bind="ownerImage">
             <div class="owner-content">
                 <span class="eyebrow">Propietario</span>
                 <h2 data-bind="ownerName">Juan Rodríguez</h2>
                 <p class="owner-role" data-bind="ownerRole">Propietario y Gerente General</p>
-                <p><strong>Celular:</strong> <a href="tel:+18095550123" data-bind="ownerPhone">+1 (809) 555-0123</a></p>
-                <a class="btn-whatsapp" href="https://wa.me/18095550123" target="_blank" rel="noopener noreferrer">
+                <p><strong>Celular:</strong> <a href="tel:+18095550123" data-bind="ownerPhone" data-bind-href="ownerPhoneHref">+1 (809) 555-0123</a></p>
+                <a class="btn-whatsapp" href="https://wa.me/18095550123" target="_blank" rel="noopener noreferrer" data-bind-href="ownerWhatsApp">
                     WhatsApp
                 </a>
                 <p class="owner-address"><strong>Dirección:</strong> <span data-bind="ownerAddress">Calle Principal #123, Santo Domingo, República Dominicana</span></p>
             </div>
         </section>
     </main>
+
+    <div class="admin-modal" id="adminModal" hidden>
+        <div class="admin-modal__backdrop" data-admin-close></div>
+        <div class="admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+            <div class="admin-modal__header">
+                <div>
+                    <p class="eyebrow">Administración</p>
+                    <h2 id="adminModalTitle">Editar contenido del sitio</h2>
+                </div>
+                <button type="button" class="icon-button" data-admin-close aria-label="Cerrar editor">×</button>
+            </div>
+
+            <form class="admin-login" id="adminLoginForm">
+                <h3>Acceso de administrador</h3>
+                <label>
+                    Correo
+                    <input type="email" id="adminEmail" placeholder="admin@correo.com" autocomplete="username">
+                </label>
+                <label>
+                    Contraseña
+                    <input type="password" id="adminPassword" placeholder="Tu contraseña" autocomplete="current-password">
+                </label>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p class="admin-feedback" id="adminLoginFeedback"></p>
+            </form>
+
+            <form class="admin-editor" id="adminEditor">
+                <div class="editor-toolbar">
+                    <p id="editorUser">Sin sesión</p>
+                    <button type="submit" class="btn-primary">Guardar cambios</button>
+                </div>
+
+                <div class="editor-grid" id="adminFields"></div>
+                <p class="admin-feedback" id="adminSaveFeedback"></p>
+            </form>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <p>Desarrollado por AR Multimedia Services</p>

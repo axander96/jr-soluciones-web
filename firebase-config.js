@@ -10,3 +10,7 @@ export const firebaseConfig = {
     messagingSenderId: "125725355287",
     appId: "1:125725355287:web:f3249ef12add38ec539b52",
 };
+
+export const adminConfig = {
+    adminEmail: "alexanderrodriguez@aramultimedias.com",
+};

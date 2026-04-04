@@ -1,3 +1,4 @@
 .firebase/
 .vscode/
+.git/
 firebase-debug.log
