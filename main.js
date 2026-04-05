@@ -85,9 +85,12 @@ const defaults = {
     valuesDescription: "Honestidad, compromiso, buen gusto, responsabilidad y servicio personalizado.",
     ownerName: "Juan Rodríguez",
     ownerRole: "Propietario y Gerente General",
+    ownerContactTitle: "Contacto",
     ownerPhone: "+1 (809) 555-0123",
     ownerPhoneHref: "tel:+18095550123",
     ownerWhatsApp: "https://wa.me/18095550123",
+    ownerFacebook: "",
+    ownerInstagram: "",
     ownerAddress: "Calle Principal #123, Santo Domingo, República Dominicana",
     ownerImage: "img/owner-placeholder.svg",
 };
@@ -172,8 +175,10 @@ const fieldGroups = [
         fields: [
             { key: "ownerName", label: "Nombre", type: "text" },
             { key: "ownerRole", label: "Cargo", type: "text" },
+            { key: "ownerContactTitle", label: "Título contacto", type: "text" },
             { key: "ownerPhone", label: "Teléfono", type: "text" },
-            { key: "ownerWhatsApp", label: "WhatsApp", type: "text" },
+            { key: "ownerFacebook", label: "Facebook", type: "text" },
+            { key: "ownerInstagram", label: "Instagram", type: "text" },
             { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
             { key: "ownerImage", label: "Foto del propietario", type: "image" },
         ],
@@ -267,9 +272,29 @@ const applyContent = (data = {}) => {
 
         const hrefNode = hrefBinders[key];
         if (hrefNode) {
-            hrefNode.href = value;
+            if (value) {
+                hrefNode.href = value;
+                hrefNode.dataset.emptyHref = "false";
+            } else {
+                hrefNode.setAttribute("href", "#");
+                hrefNode.dataset.emptyHref = "true";
+            }
         }
     });
+};
+
+const normalizeContactData = (data = {}) => {
+    const phoneValue = String(data.ownerPhone ?? defaults.ownerPhone);
+    const phoneDigits = normalizePhone(phoneValue);
+
+    return {
+        ...data,
+        ownerPhone: phoneValue,
+        ownerPhoneHref: `tel:${phoneDigits}`,
+        ownerWhatsApp: `https://wa.me/${phoneDigits}`,
+        ownerFacebook: String(data.ownerFacebook ?? ""),
+        ownerInstagram: String(data.ownerInstagram ?? ""),
+    };
 };
 
 const renderAdminPreview = () => {};
@@ -325,6 +350,38 @@ document.addEventListener("click", (event) => {
         return;
     }
 
+    if (!(event.target instanceof Element)) {
+        return;
+    }
+
+    const socialLink = event.target.closest("[data-edit-link-key]");
+    if (socialLink instanceof HTMLAnchorElement) {
+        if (socialLink.dataset.emptyHref === "true" && !document.body.classList.contains("inline-editing")) {
+            event.preventDefault();
+            return;
+        }
+
+        const editKey = socialLink.dataset.editLinkKey;
+        if (!editKey || editKey === "ownerWhatsApp") {
+            return;
+        }
+
+        event.preventDefault();
+        const friendlyName = editKey === "ownerFacebook" ? "Facebook" : "Instagram";
+        const nextValue = window.prompt(`Pega el enlace de ${friendlyName}`, currentData[editKey] ?? "");
+        if (nextValue === null) {
+            return;
+        }
+
+        currentData[editKey] = nextValue.trim();
+        currentData = normalizeContactData(currentData);
+        writeCachedContent(currentData);
+        applyContent(currentData);
+        syncEditor(currentData);
+        showToast(`${friendlyName} actualizado. No olvides guardar.`);
+        return;
+    }
+
     const image = event.target.closest("[data-src-bind]");
     if (!(image instanceof HTMLImageElement)) {
         return;
@@ -348,6 +405,7 @@ inlineFileInput.addEventListener("change", async () => {
         const path = `site/${activeInlineImageKey}/${Date.now()}-${file.name}`;
         const url = await uploadSiteImage(file, path);
         currentData[activeInlineImageKey] = url;
+        currentData = normalizeContactData(currentData);
         writeCachedContent(currentData);
         applyContent(currentData);
         syncEditor(currentData);
@@ -380,14 +438,7 @@ document.addEventListener("input", (event) => {
     currentData[key] = value;
 
     if (key === "ownerPhone") {
-        currentData.ownerPhoneHref = `tel:${normalizePhone(value)}`;
-        currentData.ownerWhatsApp = `https://wa.me/${normalizePhone(value)}`;
-        if (hrefBinders.ownerPhoneHref) {
-            hrefBinders.ownerPhoneHref.href = currentData.ownerPhoneHref;
-        }
-        if (hrefBinders.ownerWhatsApp) {
-            hrefBinders.ownerWhatsApp.href = currentData.ownerWhatsApp;
-        }
+        currentData = normalizeContactData(currentData);
     }
 
     writeCachedContent(currentData);
@@ -653,19 +704,16 @@ const saveEditorChanges = async (event) => {
     updateAdminUI();
     adminSaveFeedback.textContent = "Guardando cambios...";
 
-    const updated = { ...currentData };
+        const updated = { ...currentData };
 
     adminFields.querySelectorAll("[data-field-key]").forEach((field) => {
         updated[field.dataset.fieldKey] = field.value.trim();
     });
 
-    updated.ownerPhone = updated.ownerPhone || defaults.ownerPhone;
-    updated.ownerPhoneHref = `tel:${normalizePhone(updated.ownerPhone)}`;
-    updated.ownerWhatsApp = updated.ownerWhatsApp || `https://wa.me/${normalizePhone(updated.ownerPhone)}`;
+    currentData = normalizeContactData(updated);
 
     try {
-        await saveSiteContent(updated);
-        currentData = { ...defaults, ...updated };
+        await saveSiteContent(currentData);
         writeCachedContent(currentData);
         applyContent(currentData);
         syncEditor(currentData);
@@ -707,6 +755,7 @@ adminFields?.addEventListener("change", async (event) => {
         const path = `site/${uploadKey}/${Date.now()}-${file.name}`;
         const url = await uploadSiteImage(file, path);
         currentData[uploadKey] = url;
+        currentData = normalizeContactData(currentData);
         writeCachedContent(currentData);
         input.dataset.uploadedUrl = url;
         input.value = "";
@@ -732,6 +781,7 @@ adminFields?.addEventListener("input", (event) => {
     }
 
     currentData[fieldKey] = input.value;
+    currentData = normalizeContactData(currentData);
     applyContent(currentData);
     renderAdminPreview(currentData);
 });
@@ -739,8 +789,9 @@ adminFields?.addEventListener("input", (event) => {
 firebaseStatus.textContent = getFirebaseStatus();
 buildEditor();
 syncEditor(defaults);
-applyContent(defaults);
-renderAdminPreview(defaults);
+currentData = normalizeContactData(defaults);
+applyContent(currentData);
+renderAdminPreview(currentData);
 if (isEditWindow && adminPanel) {
     adminPanel.hidden = true;
 }
@@ -751,7 +802,7 @@ if (isEditWindow) {
 
 const cachedContent = readCachedContent();
 if (cachedContent) {
-    currentData = { ...defaults, ...cachedContent };
+    currentData = normalizeContactData({ ...defaults, ...cachedContent });
     applyContent(currentData);
     syncEditor(currentData);
     renderAdminPreview(currentData);
@@ -759,7 +810,7 @@ if (cachedContent) {
 
 watchSiteContent((data) => {
     if (!data) {
-        currentData = { ...defaults };
+        currentData = normalizeContactData({ ...defaults });
         applyContent(currentData);
         syncEditor(currentData);
         renderAdminPreview(currentData);
@@ -767,7 +818,7 @@ watchSiteContent((data) => {
         return;
     }
 
-    currentData = { ...defaults, ...data };
+    currentData = normalizeContactData({ ...defaults, ...data });
     applyContent(currentData);
     syncEditor(currentData);
     renderAdminPreview(currentData);
@@ -780,6 +831,7 @@ onFirebaseAuthChange((user) => {
 
     if (user && user.email === adminConfig.adminEmail) {
         editorUser.textContent = `Sesión: ${user.email}`;
+        currentData = normalizeContactData(currentData);
         syncEditor(currentData);
         closeModal();
     } else if (user) {
