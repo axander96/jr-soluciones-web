@@ -40,7 +40,7 @@ const defaults = {
     brandLogo: "img/logo-placeholder.svg",
     heroTitle: "JR Soluciones",
     heroDescription:
-        "Amueblamos tus espacios con estilo, durabilidad y atenciÃ³n cercana. Encuentra muebles para tu hogar, oficina o negocio con el toque elegante que distingue a la marca.",
+        "Amueblamos tus espacios con estilo, durabilidad y atención cercana. Encuentra muebles para tu hogar, oficina o negocio con el toque elegante que distingue a la marca.",
     qrKicker: "LlÃ©vatelo con",
     qrOffer: "0% de inicial",
     heroImage: "img/hero-placeholder.svg",
@@ -77,13 +77,13 @@ const defaults = {
     collection4Image: "img/collection-4.svg",
     missionTitle: "Misión",
     missionDescription:
-        "Ofrecer muebles de calidad y una atenciÃ³n cercana que ayude a cada cliente a amueblar su espacio ideal.",
+        "Ofrecer muebles de calidad y una atención cercana que ayude a cada cliente a amueblar su espacio ideal.",
     visionTitle: "Visión",
     visionDescription:
-        "Ser una mueblerÃ­a reconocida por su estilo, confianza y capacidad de adaptarse a las necesidades del mercado.",
+        "Ser una mueblería reconocida por su estilo, confianza y capacidad de adaptarse a las necesidades del mercado.",
     valuesTitle: "Valores",
     valuesDescription: "Honestidad, compromiso, buen gusto, responsabilidad y servicio personalizado.",
-    ownerName: "Juan RodrÃ­guez",
+    ownerName: "Juan Rodríguez",
     ownerRole: "Propietario y Gerente General",
     ownerContactTitle: "Contacto",
     ownerVisitTitle: "Visítanos",
@@ -93,7 +93,7 @@ const defaults = {
     ownerFacebook: "",
     ownerInstagram: "",
     ownerAddressHref: "https://www.google.com/maps/search/?api=1&query=Calle%20Principal%20%23123%2C%20Santo%20Domingo%2C%20Rep%C3%BAblica%20Dominicana",
-    ownerAddress: "Calle Principal #123, Santo Domingo, RepÃºblica Dominicana",
+    ownerAddress: "Calle Principal #123, Santo Domingo, República Dominicana",
     ownerImage: "img/owner-placeholder.svg",
 };
 
@@ -108,7 +108,7 @@ const fieldGroups = [
     {
         title: "Inicio",
         fields: [
-            { key: "heroTitle", label: "TÃ­tulo principal", type: "text" },
+            { key: "heroTitle", label: "Título principal", type: "text" },
             { key: "heroDescription", label: "DescripciÃ³n corta", type: "textarea", wide: true },
             { key: "heroImage", label: "Imagen principal", type: "image" },
             { key: "qrKicker", label: "Texto del QR", type: "text" },
@@ -119,13 +119,13 @@ const fieldGroups = [
     {
         title: "Productos destacados",
         fields: [
-            { key: "feature1Title", label: "Producto 1 tÃ­tulo", type: "text" },
+            { key: "feature1Title", label: "Producto 1 Título", type: "text" },
             { key: "feature1Description", label: "Producto 1 descripciÃ³n", type: "textarea" },
             { key: "feature1Image", label: "Producto 1 imagen", type: "image" },
-            { key: "feature2Title", label: "Producto 2 tÃ­tulo", type: "text" },
+            { key: "feature2Title", label: "Producto 2 Título", type: "text" },
             { key: "feature2Description", label: "Producto 2 descripciÃ³n", type: "textarea" },
             { key: "feature2Image", label: "Producto 2 imagen", type: "image" },
-            { key: "feature3Title", label: "Producto 3 tÃ­tulo", type: "text" },
+            { key: "feature3Title", label: "Producto 3 Título", type: "text" },
             { key: "feature3Description", label: "Producto 3 descripciÃ³n", type: "textarea" },
             { key: "feature3Image", label: "Producto 3 imagen", type: "image" },
             { key: "feature4Title", label: "Producto 4 título", type: "text" },
@@ -147,16 +147,16 @@ const fieldGroups = [
     {
         title: "Colecciones",
         fields: [
-            { key: "collection1Title", label: "Colección 1 tÃ­tulo", type: "text" },
+            { key: "collection1Title", label: "Colección 1 Título", type: "text" },
             { key: "collection1Description", label: "Colección 1 texto", type: "textarea" },
             { key: "collection1Image", label: "Colección 1 imagen", type: "image" },
-            { key: "collection2Title", label: "Colección 2 tÃ­tulo", type: "text" },
+            { key: "collection2Title", label: "Colección 2 Título", type: "text" },
             { key: "collection2Description", label: "Colección 2 texto", type: "textarea" },
             { key: "collection2Image", label: "Colección 2 imagen", type: "image" },
-            { key: "collection3Title", label: "Colección 3 tÃ­tulo", type: "text" },
+            { key: "collection3Title", label: "Colección 3 Título", type: "text" },
             { key: "collection3Description", label: "Colección 3 texto", type: "textarea" },
             { key: "collection3Image", label: "Colección 3 imagen", type: "image" },
-            { key: "collection4Title", label: "Colección 4 tÃ­tulo", type: "text" },
+            { key: "collection4Title", label: "Colección 4 Título", type: "text" },
             { key: "collection4Description", label: "Colección 4 texto", type: "textarea" },
             { key: "collection4Image", label: "Colección 4 imagen", type: "image" },
         ],
@@ -164,11 +164,11 @@ const fieldGroups = [
     {
         title: "Nosotros",
         fields: [
-            { key: "missionTitle", label: "Misión tÃ­tulo", type: "text" },
+            { key: "missionTitle", label: "Misión Título", type: "text" },
             { key: "missionDescription", label: "Misión texto", type: "textarea", wide: true },
-            { key: "visionTitle", label: "Visión tÃ­tulo", type: "text" },
+            { key: "visionTitle", label: "Visión Título", type: "text" },
             { key: "visionDescription", label: "Visión texto", type: "textarea", wide: true },
-            { key: "valuesTitle", label: "Valores tÃ­tulo", type: "text" },
+            { key: "valuesTitle", label: "Valores Título", type: "text" },
             { key: "valuesDescription", label: "Valores texto", type: "textarea", wide: true },
         ],
     },
@@ -603,7 +603,7 @@ const updateAdminUI = () => {
     adminEditBtn.hidden = !isAdmin;
     adminLogoutBtn.hidden = !isAdmin;
     firebaseStatus.textContent = isAdmin
-        ? `SesiÃ³n activa: ${currentUser.email}`
+        ? `sesión activa: ${currentUser.email}`
         : getFirebaseStatus();
 
     adminEditor.querySelectorAll("input, textarea, button").forEach((control) => {
@@ -686,7 +686,7 @@ adminModal?.addEventListener("click", (event) => {
 
 adminLoginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    adminLoginFeedback.textContent = "Iniciando sesiÃ³n...";
+    adminLoginFeedback.textContent = "Iniciando sesión...";
 
     const email = document.getElementById("adminEmail").value.trim();
     const password = document.getElementById("adminPassword").value;
@@ -696,11 +696,11 @@ adminLoginForm?.addEventListener("submit", async (event) => {
         adminLoginFeedback.textContent = "";
         adminLoginForm.reset();
         if (credential?.user?.email === adminConfig.adminEmail) {
-            editorUser.textContent = `SesiÃ³n: ${credential.user.email}`;
+            editorUser.textContent = `sesión: ${credential.user.email}`;
         }
         closeModal();
     } catch (error) {
-        adminLoginFeedback.textContent = "No se pudo iniciar sesiÃ³n. Revisa correo y contraseÃ±a.";
+        adminLoginFeedback.textContent = "No se pudo iniciar sesión. Revisa correo y contraseÃ±a.";
     }
 });
 
@@ -841,7 +841,7 @@ onFirebaseAuthChange((user) => {
     updateAdminUI();
 
     if (user && user.email === adminConfig.adminEmail) {
-        editorUser.textContent = `SesiÃ³n: ${user.email}`;
+        editorUser.textContent = `sesión: ${user.email}`;
         currentData = normalizeContactData(currentData);
         syncEditor(currentData);
         closeModal();
@@ -850,7 +850,7 @@ onFirebaseAuthChange((user) => {
         closeModal();
         adminSaveFeedback.textContent = "Ese correo no tiene permiso para editar.";
     } else {
-        editorUser.textContent = "Sin sesiÃ³n";
+        editorUser.textContent = "Sin sesión";
         closeModal();
     }
 });
@@ -869,5 +869,6 @@ onFirebaseAuthChange((user) => {
     setEditMode(false);
     setModalMode("login");
 });
+
 
 
