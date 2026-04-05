@@ -28,6 +28,7 @@ const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
+const contentCacheKey = "jr-soluciones-web:site-home";
 
 const defaults = {
     heroTitle: "JR Soluciones",
@@ -179,6 +180,28 @@ let currentData = { ...defaults };
 let currentUser = null;
 let isSaving = false;
 let toastTimer = null;
+
+const readCachedContent = () => {
+    try {
+        const cached = window.localStorage.getItem(contentCacheKey);
+        if (!cached) {
+            return null;
+        }
+
+        const parsed = JSON.parse(cached);
+        return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+        return null;
+    }
+};
+
+const writeCachedContent = (data) => {
+    try {
+        window.localStorage.setItem(contentCacheKey, JSON.stringify(data));
+    } catch {
+        // Ignore storage quota or privacy mode issues.
+    }
+};
 
 const normalizePhone = (value) => String(value ?? "").replace(/[^0-9]/g, "");
 
@@ -430,6 +453,7 @@ const saveEditorChanges = async (event) => {
     try {
         await saveSiteContent(updated);
         currentData = { ...defaults, ...updated };
+        writeCachedContent(currentData);
         applyContent(currentData);
         syncEditor(currentData);
         adminSaveFeedback.textContent = "Cambios guardados correctamente.";
@@ -470,6 +494,7 @@ adminFields?.addEventListener("change", async (event) => {
         const path = `site/${uploadKey}/${Date.now()}-${file.name}`;
         const url = await uploadSiteImage(file, path);
         currentData[uploadKey] = url;
+        writeCachedContent(currentData);
         input.dataset.uploadedUrl = url;
         input.value = "";
         if (preview) {
@@ -486,17 +511,26 @@ buildEditor();
 syncEditor(defaults);
 applyContent(defaults);
 
+const cachedContent = readCachedContent();
+if (cachedContent) {
+    currentData = { ...defaults, ...cachedContent };
+    applyContent(currentData);
+    syncEditor(currentData);
+}
+
 watchSiteContent((data) => {
     if (!data) {
         currentData = { ...defaults };
         applyContent(currentData);
         syncEditor(currentData);
+        writeCachedContent(currentData);
         return;
     }
 
     currentData = { ...defaults, ...data };
     applyContent(currentData);
     syncEditor(currentData);
+    writeCachedContent(currentData);
 });
 
 onFirebaseAuthChange((user) => {
