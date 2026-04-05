@@ -273,6 +273,7 @@ const buildEditor = () => {
 const setModalMode = (mode) => {
     const isLogin = mode === "login";
     const isEditor = mode === "editor";
+    adminModal.dataset.mode = mode;
     adminLoginForm.hidden = !isLogin;
     adminEditor.hidden = !isEditor;
     adminLoginForm.classList.toggle("is-visible", isLogin);
@@ -282,6 +283,7 @@ const setModalMode = (mode) => {
 
 const closeModal = () => {
     adminModal.hidden = true;
+    delete adminModal.dataset.mode;
     adminLoginFeedback.textContent = "";
     adminSaveFeedback.textContent = "";
 };
@@ -295,8 +297,12 @@ const updateAdminUI = () => {
         ? `Sesión activa: ${currentUser.email}`
         : getFirebaseStatus();
 
-    adminFields.querySelectorAll("[data-upload-key]").forEach((input) => {
-        input.disabled = !isAdmin;
+    adminEditor.querySelectorAll("input, textarea, button").forEach((control) => {
+        if (control.closest(".admin-login")) {
+            return;
+        }
+
+        control.disabled = !isAdmin;
     });
 };
 

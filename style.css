@@ -492,6 +492,11 @@ main {
     display: none;
 }
 
+.admin-modal .admin-login[hidden],
+.admin-modal .admin-editor[hidden] {
+    display: none !important;
+}
+
 .admin-modal {
     position: fixed;
     inset: 0;
@@ -569,6 +574,14 @@ main {
 
 .admin-editor.is-visible {
     display: grid;
+}
+
+.admin-modal[data-mode="login"] .admin-editor {
+    display: none !important;
+}
+
+.admin-modal[data-mode="editor"] .admin-login {
+    display: none !important;
 }
 
 .editor-group {
