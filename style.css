@@ -529,7 +529,7 @@ main {
 }
 
 .admin-login {
-    display: grid;
+    display: none;
     gap: 14px;
     max-width: 420px;
     margin: 18px 0 28px;
@@ -559,8 +559,16 @@ main {
 }
 
 .admin-editor {
-    display: grid;
+    display: none;
     gap: 16px;
+}
+
+.admin-login.is-visible {
+    display: grid;
+}
+
+.admin-editor.is-visible {
+    display: grid;
 }
 
 .editor-group {

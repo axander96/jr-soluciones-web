@@ -275,6 +275,8 @@ const setModalMode = (mode) => {
     const isEditor = mode === "editor";
     adminLoginForm.hidden = !isLogin;
     adminEditor.hidden = !isEditor;
+    adminLoginForm.classList.toggle("is-visible", isLogin);
+    adminEditor.classList.toggle("is-visible", isEditor);
     adminModal.hidden = false;
 };
 
@@ -361,11 +363,8 @@ adminLoginForm?.addEventListener("submit", async (event) => {
         adminLoginForm.reset();
         if (credential?.user?.email === adminConfig.adminEmail) {
             editorUser.textContent = `Sesión: ${credential.user.email}`;
-            syncEditor(currentData);
-            setModalMode("editor");
-        } else {
-            closeModal();
         }
+        closeModal();
     } catch (error) {
         adminLoginFeedback.textContent = "No se pudo iniciar sesión. Revisa correo y contraseña.";
     }
@@ -458,9 +457,6 @@ onFirebaseAuthChange((user) => {
     if (user && user.email === adminConfig.adminEmail) {
         editorUser.textContent = `Sesión: ${user.email}`;
         syncEditor(currentData);
-        if (!adminModal.hidden && adminLoginForm.hidden) {
-            setModalMode("editor");
-        }
     } else if (user) {
         editorUser.textContent = `Cuenta no autorizada: ${user.email}`;
         closeModal();
