@@ -74,13 +74,13 @@ img {
 .brand {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 10px;
     min-width: 0;
 }
 
 .brand-logo {
-    width: clamp(104px, 14vw, 178px);
-    height: 56px;
+    width: clamp(92px, 12vw, 152px);
+    height: 50px;
     border-radius: 0;
     object-fit: contain;
     background: transparent;
@@ -106,7 +106,7 @@ img {
 }
 
 .brand h1 {
-    font-size: 1.4rem;
+    font-size: 1.28rem;
     color: var(--navy);
     white-space: nowrap;
 }
@@ -1050,8 +1050,8 @@ main {
     }
 
     .brand-logo {
-        width: min(100%, 210px);
-        height: 56px;
+        width: min(100%, 180px);
+        height: 50px;
     }
 
     .story-grid,
