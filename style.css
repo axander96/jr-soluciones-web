@@ -79,8 +79,8 @@ img {
 }
 
 .brand-logo {
-    width: clamp(120px, 16vw, 210px);
-    height: 64px;
+    width: clamp(104px, 14vw, 178px);
+    height: 56px;
     border-radius: 0;
     object-fit: contain;
     background: transparent;
@@ -1050,8 +1050,8 @@ main {
     }
 
     .brand-logo {
-        width: min(100%, 240px);
-        height: 64px;
+        width: min(100%, 210px);
+        height: 56px;
     }
 
     .story-grid,
