@@ -224,6 +224,13 @@ main {
     border: 1px solid rgba(22, 50, 79, 0.12);
 }
 
+.hero .btn-secondary {
+    color: white;
+    background: linear-gradient(135deg, var(--navy), var(--teal));
+    border: 1px solid transparent;
+    box-shadow: 0 12px 28px rgba(23, 50, 77, 0.24);
+}
+
 .btn-primary:hover,
 .btn-whatsapp:hover,
 .btn-secondary:hover {
