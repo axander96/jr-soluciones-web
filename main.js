@@ -182,15 +182,15 @@ const fieldGroups = [
             { key: "ownerVisitTitle", label: "Título visita", type: "text" },
             { key: "ownerFacebook", label: "Facebook", type: "text" },
             { key: "ownerInstagram", label: "Instagram", type: "text" },
+            { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
             {
                 key: "ownerAddressHref",
-                label: "Enlace de Google Maps",
+                label: "URL Google Map",
                 type: "text",
                 wide: true,
                 helper:
-                    "Pega aquí el enlace de tu negocio en Google Maps. Ese enlace se abrirá cuando el cliente pulse la dirección.",
+                    "Pega aquí el enlace de Google Maps. Al tocar la dirección en la página, se abrirá este enlace.",
             },
-            { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
             { key: "ownerImage", label: "Foto del propietario", type: "image" },
         ],
     },
