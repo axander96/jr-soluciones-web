@@ -1,10 +1,10 @@
 import {
     getFirebaseStatus,
-    loadSiteContent,
     loginWithEmail,
     logout,
     onFirebaseAuthChange,
     saveSiteContent,
+    watchSiteContent,
     uploadSiteImage,
 } from "./firebase.js";
 import { adminConfig } from "./firebase-config.js";
@@ -23,6 +23,7 @@ const adminFields = document.getElementById("adminFields");
 const adminSaveFeedback = document.getElementById("adminSaveFeedback");
 const adminSaveBtn = document.getElementById("adminSaveBtn");
 const editorUser = document.getElementById("editorUser");
+const siteToast = document.getElementById("siteToast");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
@@ -177,8 +178,31 @@ const hrefBinders = Object.fromEntries(
 let currentData = { ...defaults };
 let currentUser = null;
 let isSaving = false;
+let toastTimer = null;
 
 const normalizePhone = (value) => String(value ?? "").replace(/[^0-9]/g, "");
+
+const showToast = (message, tone = "success") => {
+    if (!siteToast) {
+        return;
+    }
+
+    window.clearTimeout(toastTimer);
+    siteToast.textContent = message;
+    siteToast.classList.toggle("is-error", tone === "error");
+    siteToast.hidden = false;
+
+    requestAnimationFrame(() => {
+        siteToast.classList.add("is-visible");
+    });
+
+    toastTimer = window.setTimeout(() => {
+        siteToast.classList.remove("is-visible");
+        window.setTimeout(() => {
+            siteToast.hidden = true;
+        }, 240);
+    }, 2800);
+};
 
 const applyContent = (data = {}) => {
     Object.entries(data).forEach(([key, value]) => {
@@ -409,8 +433,10 @@ const saveEditorChanges = async (event) => {
         applyContent(currentData);
         syncEditor(currentData);
         adminSaveFeedback.textContent = "Cambios guardados correctamente.";
+        showToast("Cambios guardados correctamente.");
     } catch (error) {
         adminSaveFeedback.textContent = "No se pudieron guardar los cambios.";
+        showToast("No se pudieron guardar los cambios.", "error");
     } finally {
         isSaving = false;
         updateAdminUI();
@@ -460,20 +486,18 @@ buildEditor();
 syncEditor(defaults);
 applyContent(defaults);
 
-loadSiteContent()
-    .then((data) => {
-        if (data) {
-            currentData = { ...defaults, ...data };
-            applyContent(currentData);
-            syncEditor(currentData);
-            firebaseStatus.textContent = "Contenido cargado desde Firestore";
-        } else {
-            firebaseStatus.textContent = "Firebase listo, sin contenido guardado";
-        }
-    })
-    .catch(() => {
-        firebaseStatus.textContent = "Firebase listo, pero no se pudo leer el contenido";
-    });
+watchSiteContent((data) => {
+    if (!data) {
+        currentData = { ...defaults };
+        applyContent(currentData);
+        syncEditor(currentData);
+        return;
+    }
+
+    currentData = { ...defaults, ...data };
+    applyContent(currentData);
+    syncEditor(currentData);
+});
 
 onFirebaseAuthChange((user) => {
     currentUser = user;

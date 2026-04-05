@@ -16,7 +16,7 @@
 
         <div class="admin-content" id="adminContent">
             <p class="admin-title">Panel rápido</p>
-            <p class="admin-status" id="firebaseStatus">Firebase: pendiente de configurar</p>
+            <p class="admin-status" id="firebaseStatus" hidden aria-hidden="true">Firebase: pendiente de configurar</p>
             <button type="button" id="adminLoginBtn">Iniciar sesión</button>
             <button type="button" id="adminEditBtn" hidden>Editar contenido</button>
             <button type="button" id="adminLogoutBtn" hidden>Cerrar sesión</button>
@@ -240,6 +240,8 @@
     <footer class="site-footer">
         <p>Desarrollado por AR Multimedia Services</p>
     </footer>
+
+    <div class="site-toast" id="siteToast" aria-live="polite" aria-atomic="true" hidden></div>
 
     <script type="module" src="main.js"></script>
 </body>

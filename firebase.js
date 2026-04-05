@@ -10,6 +10,7 @@ import {
     doc,
     getDoc,
     getFirestore,
+    onSnapshot,
     serverTimestamp,
     setDoc,
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
@@ -89,6 +90,19 @@ export async function loadSiteContent() {
 
     const snapshot = await getDoc(doc(services.db, "site", "home"));
     return snapshot.exists() ? snapshot.data() : null;
+}
+
+export function watchSiteContent(callback) {
+    const services = initFirebase();
+
+    if (!services?.db) {
+        callback(null);
+        return () => {};
+    }
+
+    return onSnapshot(doc(services.db, "site", "home"), (snapshot) => {
+        callback(snapshot.exists() ? snapshot.data() : null);
+    });
 }
 
 export async function saveSiteContent(payload) {
