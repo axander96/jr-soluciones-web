@@ -139,9 +139,6 @@ const fieldGroups = [
             { key: "heroTitle", label: "Título principal", type: "text" },
             { key: "heroDescription", label: "Descripción corta", type: "textarea", wide: true },
             { key: "heroImage", label: "Imagen principal", type: "image" },
-            { key: "qrKicker", label: "Texto del QR", type: "text" },
-            { key: "qrOffer", label: "Oferta del QR", type: "text" },
-            { key: "qrImage", label: "Imagen QR", type: "image" },
         ],
     },
     {
