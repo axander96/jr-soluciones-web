@@ -91,6 +91,7 @@ const defaults = {
     ownerWhatsApp: "https://wa.me/18095550123",
     ownerFacebook: "",
     ownerInstagram: "",
+    ownerAddressHref: "https://www.google.com/maps/search/?api=1&query=Calle%20Principal%20%23123%2C%20Santo%20Domingo%2C%20Rep%C3%BAblica%20Dominicana",
     ownerAddress: "Calle Principal #123, Santo Domingo, República Dominicana",
     ownerImage: "img/owner-placeholder.svg",
 };
@@ -179,6 +180,7 @@ const fieldGroups = [
             { key: "ownerPhone", label: "Teléfono", type: "text" },
             { key: "ownerFacebook", label: "Facebook", type: "text" },
             { key: "ownerInstagram", label: "Instagram", type: "text" },
+            { key: "ownerAddressHref", label: "Enlace de Google Maps", type: "text", wide: true },
             { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
             { key: "ownerImage", label: "Foto del propietario", type: "image" },
         ],
@@ -294,6 +296,12 @@ const normalizeContactData = (data = {}) => {
         ownerWhatsApp: `https://wa.me/${phoneDigits}`,
         ownerFacebook: String(data.ownerFacebook ?? ""),
         ownerInstagram: String(data.ownerInstagram ?? ""),
+        ownerAddressHref: String(
+            data.ownerAddressHref ??
+                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    String(data.ownerAddress ?? defaults.ownerAddress)
+                )}`
+        ),
     };
 };
 
