@@ -21,6 +21,7 @@ const adminLoginFeedback = document.getElementById("adminLoginFeedback");
 const adminEditor = document.getElementById("adminEditor");
 const adminFields = document.getElementById("adminFields");
 const adminSaveFeedback = document.getElementById("adminSaveFeedback");
+const adminSaveBtn = document.getElementById("adminSaveBtn");
 const editorUser = document.getElementById("editorUser");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
@@ -175,6 +176,7 @@ const hrefBinders = Object.fromEntries(
 
 let currentData = { ...defaults };
 let currentUser = null;
+let isSaving = false;
 
 const normalizePhone = (value) => String(value ?? "").replace(/[^0-9]/g, "");
 
@@ -302,8 +304,12 @@ const updateAdminUI = () => {
             return;
         }
 
-        control.disabled = !isAdmin;
+        control.disabled = !isAdmin || isSaving;
     });
+
+    if (adminSaveBtn) {
+        adminSaveBtn.textContent = isSaving ? "Guardando..." : "Guardar cambios";
+    }
 };
 
 const setActiveLink = (id) => {
@@ -376,8 +382,15 @@ adminLoginForm?.addEventListener("submit", async (event) => {
     }
 });
 
-adminEditor?.addEventListener("submit", async (event) => {
-    event.preventDefault();
+const saveEditorChanges = async (event) => {
+    event?.preventDefault?.();
+
+    if (!currentUser || currentUser.email !== adminConfig.adminEmail || isSaving) {
+        return;
+    }
+
+    isSaving = true;
+    updateAdminUI();
     adminSaveFeedback.textContent = "Guardando cambios...";
 
     const updated = { ...currentData };
@@ -398,8 +411,14 @@ adminEditor?.addEventListener("submit", async (event) => {
         adminSaveFeedback.textContent = "Cambios guardados correctamente.";
     } catch (error) {
         adminSaveFeedback.textContent = "No se pudieron guardar los cambios.";
+    } finally {
+        isSaving = false;
+        updateAdminUI();
     }
-});
+};
+
+adminEditor?.addEventListener("submit", saveEditorChanges);
+adminSaveBtn?.addEventListener("click", saveEditorChanges);
 
 adminFields?.addEventListener("change", async (event) => {
     const input = event.target;
