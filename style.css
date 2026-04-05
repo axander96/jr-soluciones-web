@@ -62,12 +62,13 @@ img {
 .brand {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
+    min-width: 0;
 }
 
 .brand-logo {
-    width: 58px;
-    height: 58px;
+    width: clamp(120px, 16vw, 210px);
+    height: 64px;
     border-radius: 16px;
     object-fit: contain;
     background: linear-gradient(135deg, #17324d, #244f76);
@@ -95,6 +96,7 @@ img {
 .brand h1 {
     font-size: 1.4rem;
     color: var(--navy);
+    white-space: nowrap;
 }
 
 .brand-eyebrow {
@@ -966,6 +968,11 @@ main {
         align-items: flex-start;
         gap: 16px;
         border-radius: 0 0 18px 18px;
+    }
+
+    .brand-logo {
+        width: min(100%, 240px);
+        height: 64px;
     }
 
     .story-grid,
