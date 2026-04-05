@@ -23,14 +23,17 @@ const adminFields = document.getElementById("adminFields");
 const adminSaveFeedback = document.getElementById("adminSaveFeedback");
 const adminSaveBtn = document.getElementById("adminSaveBtn");
 const editorUser = document.getElementById("editorUser");
-const adminWorkspace = document.getElementById("adminWorkspace");
-const adminPreview = document.getElementById("adminPreview");
+const adminSaveInlineBtn = document.getElementById("adminSaveInlineBtn");
+const adminCloseEditBtn = document.getElementById("adminCloseEditBtn");
+const editBar = document.getElementById("editBar");
+const editBarStatus = document.getElementById("editBarStatus");
 const siteToast = document.getElementById("siteToast");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
 const contentCacheKey = "jr-soluciones-web:site-home";
+const isEditWindow = new URLSearchParams(window.location.search).get("edit") === "1";
 
 const defaults = {
     brandTitle: "JR Soluciones",
@@ -269,61 +272,183 @@ const applyContent = (data = {}) => {
     });
 };
 
-const renderPreviewCard = (title, image, text) => `
-    <article class="preview-card">
-        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}">
-        <div>
-            <h4>${escapeHtml(title)}</h4>
-            <p>${escapeHtml(text)}</p>
-        </div>
-    </article>
-`;
+const renderAdminPreview = () => {};
 
-const renderAdminPreview = (data = {}) => {
-    if (!adminPreview) {
+const inlineFileInput = document.createElement("input");
+inlineFileInput.type = "file";
+inlineFileInput.accept = "image/*";
+inlineFileInput.hidden = true;
+document.body.appendChild(inlineFileInput);
+
+let activeInlineImageKey = "";
+
+const setInlineEditing = (enabled) => {
+    document.body.classList.toggle("inline-editing", enabled);
+    if (editBar) {
+        editBar.hidden = !enabled;
+    }
+    if (adminPanel) {
+        adminPanel.hidden = enabled || isEditWindow;
+    }
+
+    Object.entries(binders).forEach(([key, node]) => {
+        if (!(node instanceof HTMLElement)) {
+            return;
+        }
+
+        if (node.tagName === "IMG") {
+            node.classList.toggle("editable-media", enabled);
+            return;
+        }
+
+        node.classList.toggle("editable-text", enabled);
+        if (enabled) {
+            node.setAttribute("contenteditable", "true");
+            node.setAttribute("spellcheck", "true");
+            node.dataset.inlineKey = key;
+        } else {
+            node.removeAttribute("contenteditable");
+            node.removeAttribute("spellcheck");
+            delete node.dataset.inlineKey;
+        }
+    });
+};
+
+const syncInlineField = (key, value) => {
+    currentData[key] = value;
+    writeCachedContent(currentData);
+    syncEditor(currentData);
+};
+
+document.addEventListener("click", (event) => {
+    if (!document.body.classList.contains("inline-editing")) {
         return;
     }
 
-    adminPreview.innerHTML = `
-        <header class="preview-hero">
-            <div class="preview-brand">
-                <img src="${escapeHtml(data.brandLogo ?? defaults.brandLogo)}" alt="${escapeHtml(data.brandTitle ?? defaults.brandTitle)}">
-                <div>
-                    <h4>${escapeHtml(data.brandTitle ?? defaults.brandTitle)}</h4>
-                    <p>Vista previa del cliente</p>
-                </div>
-            </div>
-            <div class="preview-hero-copy">
-                <span>Inicio</span>
-                <h3>${escapeHtml(data.heroTitle ?? defaults.heroTitle)}</h3>
-                <p>${escapeHtml(data.heroDescription ?? defaults.heroDescription)}</p>
-            </div>
-        </header>
-        <section class="preview-grid preview-grid--highlights">
-            ${renderPreviewCard(data.feature1Title ?? defaults.feature1Title, data.feature1Image ?? defaults.feature1Image, data.feature1Description ?? defaults.feature1Description)}
-            ${renderPreviewCard(data.feature2Title ?? defaults.feature2Title, data.feature2Image ?? defaults.feature2Image, data.feature2Description ?? defaults.feature2Description)}
-            ${renderPreviewCard(data.feature3Title ?? defaults.feature3Title, data.feature3Image ?? defaults.feature3Image, data.feature3Description ?? defaults.feature3Description)}
-            ${renderPreviewCard(data.feature4Title ?? defaults.feature4Title, data.feature4Image ?? defaults.feature4Image, data.feature4Description ?? defaults.feature4Description)}
-        </section>
-        <section class="preview-grid preview-grid--story">
-            ${renderPreviewCard(data.story1Title ?? defaults.story1Title, data.story1Image ?? defaults.story1Image, data.story1Description ?? defaults.story1Description)}
-            ${renderPreviewCard(data.story2Title ?? defaults.story2Title, data.story2Image ?? defaults.story2Image, data.story2Description ?? defaults.story2Description)}
-        </section>
-        <section class="preview-grid preview-grid--collections">
-            ${renderPreviewCard(data.collection1Title ?? defaults.collection1Title, data.collection1Image ?? defaults.collection1Image, data.collection1Description ?? defaults.collection1Description)}
-            ${renderPreviewCard(data.collection2Title ?? defaults.collection2Title, data.collection2Image ?? defaults.collection2Image, data.collection2Description ?? defaults.collection2Description)}
-            ${renderPreviewCard(data.collection3Title ?? defaults.collection3Title, data.collection3Image ?? defaults.collection3Image, data.collection3Description ?? defaults.collection3Description)}
-            ${renderPreviewCard(data.collection4Title ?? defaults.collection4Title, data.collection4Image ?? defaults.collection4Image, data.collection4Description ?? defaults.collection4Description)}
-        </section>
-        <section class="preview-owner">
-            <img src="${escapeHtml(data.ownerImage ?? defaults.ownerImage)}" alt="${escapeHtml(data.ownerName ?? defaults.ownerName)}">
-            <div>
-                <h3>${escapeHtml(data.ownerName ?? defaults.ownerName)}</h3>
-                <p>${escapeHtml(data.ownerRole ?? defaults.ownerRole)}</p>
-                <p>${escapeHtml(data.ownerAddress ?? defaults.ownerAddress)}</p>
-            </div>
-        </section>
-    `;
+    const image = event.target.closest("[data-src-bind]");
+    if (!(image instanceof HTMLImageElement)) {
+        return;
+    }
+
+    event.preventDefault();
+    activeInlineImageKey = image.dataset.srcBind || "";
+    inlineFileInput.value = "";
+    inlineFileInput.click();
+});
+
+inlineFileInput.addEventListener("change", async () => {
+    if (!activeInlineImageKey || !inlineFileInput.files?.[0]) {
+        return;
+    }
+
+    const file = inlineFileInput.files[0];
+
+    try {
+        adminSaveFeedback.textContent = "Subiendo imagen...";
+        const path = `site/${activeInlineImageKey}/${Date.now()}-${file.name}`;
+        const url = await uploadSiteImage(file, path);
+        currentData[activeInlineImageKey] = url;
+        writeCachedContent(currentData);
+        applyContent(currentData);
+        syncEditor(currentData);
+        adminSaveFeedback.textContent = "Imagen lista. Recuerda guardar los cambios.";
+        showToast("Imagen actualizada. No olvides guardar.");
+    } catch {
+        adminSaveFeedback.textContent = "No se pudo subir la imagen.";
+        showToast("No se pudo subir la imagen.", "error");
+    } finally {
+        activeInlineImageKey = "";
+    }
+});
+
+document.addEventListener("input", (event) => {
+    if (!document.body.classList.contains("inline-editing")) {
+        return;
+    }
+
+    const node = event.target;
+    if (!(node instanceof HTMLElement)) {
+        return;
+    }
+
+    const key = node.dataset.inlineKey;
+    if (!key) {
+        return;
+    }
+
+    const value = node.innerText.trim();
+    currentData[key] = value;
+
+    if (key === "ownerPhone") {
+        currentData.ownerPhoneHref = `tel:${normalizePhone(value)}`;
+        currentData.ownerWhatsApp = `https://wa.me/${normalizePhone(value)}`;
+        if (hrefBinders.ownerPhoneHref) {
+            hrefBinders.ownerPhoneHref.href = currentData.ownerPhoneHref;
+        }
+        if (hrefBinders.ownerWhatsApp) {
+            hrefBinders.ownerWhatsApp.href = currentData.ownerWhatsApp;
+        }
+    }
+
+    writeCachedContent(currentData);
+    syncEditor(currentData);
+});
+
+const isInlineTextNode = (node) =>
+    node instanceof HTMLElement &&
+    node.dataset.bind &&
+    !node.matches("img") &&
+    !node.matches("a[href^='tel:']") ? true : true;
+
+const updateInlineTextState = (enabled) => {
+    binders.heroTitle?.setAttribute("contenteditable", enabled ? "true" : "false");
+    binders.heroDescription?.setAttribute("contenteditable", enabled ? "true" : "false");
+    binders.qrKicker?.setAttribute("contenteditable", enabled ? "true" : "false");
+    binders.qrOffer?.setAttribute("contenteditable", enabled ? "true" : "false");
+
+    Object.entries(binders).forEach(([key, node]) => {
+        if (!(node instanceof HTMLElement)) {
+            return;
+        }
+
+        if (node.tagName === "IMG") {
+            node.classList.toggle("editable-media", enabled);
+            return;
+        }
+
+        if (key === "ownerPhone" || key === "ownerWhatsApp" || key === "brandTitle" || key.endsWith("Title") || key.endsWith("Description") || key.endsWith("Role") || key.endsWith("Address")) {
+            node.setAttribute("contenteditable", enabled ? "true" : "false");
+            node.classList.toggle("editable-text", enabled);
+            node.spellcheck = enabled;
+        }
+    });
+
+    if (enabled) {
+        binders.ownerPhone?.setAttribute("contenteditable", "true");
+        binders.ownerPhone?.classList.add("editable-text");
+        binders.ownerPhone?.setAttribute("data-inline-key", "ownerPhone");
+        binders.ownerWhatsApp?.setAttribute("contenteditable", "true");
+        binders.ownerWhatsApp?.classList.add("editable-text");
+        binders.ownerWhatsApp?.setAttribute("data-inline-key", "ownerWhatsApp");
+    } else {
+        binders.ownerPhone?.removeAttribute("contenteditable");
+        binders.ownerPhone?.classList.remove("editable-text");
+        binders.ownerWhatsApp?.removeAttribute("contenteditable");
+        binders.ownerWhatsApp?.classList.remove("editable-text");
+    }
+};
+
+const setEditMode = (enabled) => {
+    setInlineEditing(enabled);
+};
+
+const syncInlineFromDom = () => {
+    adminFields.querySelectorAll("[data-field-key]").forEach((field) => {
+        const key = field.dataset.fieldKey;
+        if (typeof key === "string") {
+            currentData[key] = field.value.trim();
+        }
+    });
 };
 
 const syncEditor = (data = {}) => {
@@ -397,15 +522,9 @@ const buildEditor = () => {
 
 const setModalMode = (mode) => {
     const isLogin = mode === "login";
-    const isEditor = mode === "editor";
     adminModal.dataset.mode = mode;
     adminLoginForm.hidden = !isLogin;
-    adminEditor.hidden = !isEditor;
-    if (adminWorkspace) {
-        adminWorkspace.hidden = !isEditor;
-    }
     adminLoginForm.classList.toggle("is-visible", isLogin);
-    adminEditor.classList.toggle("is-visible", isEditor);
     adminModal.hidden = false;
 };
 
@@ -435,6 +554,11 @@ const updateAdminUI = () => {
 
     if (adminSaveBtn) {
         adminSaveBtn.textContent = isSaving ? "Guardando..." : "Guardar cambios";
+    }
+
+    if (adminSaveInlineBtn) {
+        adminSaveInlineBtn.textContent = isSaving ? "Guardando..." : "Guardar cambios";
+        adminSaveInlineBtn.disabled = isSaving;
     }
 };
 
@@ -473,9 +597,18 @@ adminLoginBtn?.addEventListener("click", () => {
 });
 
 adminEditBtn?.addEventListener("click", () => {
-    syncEditor(currentData);
-    renderAdminPreview(currentData);
-    setModalMode("editor");
+    const targetUrl = new URL(window.location.href);
+    targetUrl.searchParams.set("edit", "1");
+    window.open(targetUrl.toString(), "_blank", "noopener");
+    closeModal();
+});
+
+adminSaveInlineBtn?.addEventListener("click", saveEditorChanges);
+
+adminCloseEditBtn?.addEventListener("click", () => {
+    const targetUrl = new URL(window.location.href);
+    targetUrl.searchParams.delete("edit");
+    window.location.href = targetUrl.toString();
 });
 
 adminLogoutBtn?.addEventListener("click", async () => {
@@ -615,6 +748,13 @@ buildEditor();
 syncEditor(defaults);
 applyContent(defaults);
 renderAdminPreview(defaults);
+if (isEditWindow && adminPanel) {
+    adminPanel.hidden = true;
+}
+if (isEditWindow) {
+    setEditMode(false);
+    setModalMode("login");
+}
 
 const cachedContent = readCachedContent();
 if (cachedContent) {
@@ -656,4 +796,19 @@ onFirebaseAuthChange((user) => {
         editorUser.textContent = "Sin sesión";
         closeModal();
     }
+});
+
+onFirebaseAuthChange((user) => {
+    if (!isEditWindow) {
+        return;
+    }
+
+    if (user && user.email === adminConfig.adminEmail) {
+        setEditMode(true);
+        closeModal();
+        return;
+    }
+
+    setEditMode(false);
+    setModalMode("login");
 });
