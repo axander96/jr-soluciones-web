@@ -44,18 +44,18 @@
             </div>
         </div>
 
-        <nav class="site-nav" aria-label="NavegaciÃ³n principal">
-            <a href="#inicio" class="active">Inicio</a>
-            <a href="#historia">Historia</a>
-            <a href="#colecciones">Colecciones</a>
-            <a href="#nosotros">Nosotros</a>
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="#inicio" class="active"><span data-bind="navInicio">Inicio</span></a>
+            <a href="#historia"><span data-bind="navHistoria">Historia</span></a>
+            <a href="#colecciones"><span data-bind="navColecciones">Colecciones</span></a>
+            <a href="#nosotros"><span data-bind="navNosotros">Nosotros</span></a>
         </nav>
     </header>
 
     <main>
         <section class="hero section-card" id="inicio">
             <div class="hero-copy">
-                <span class="eyebrow">DiseÃ±o, comodidad y calidad</span>
+                <span class="eyebrow" data-bind="heroEyebrow">Diseño, comodidad y calidad</span>
                 <h2 data-bind="heroTitle">JR Soluciones</h2>
                 <p class="hero-description" data-bind="heroDescription">
                     Amueblamos tus espacios con estilo, durabilidad y atención cercana. Encuentra muebles para tu hogar,
@@ -64,9 +64,9 @@
 
                 <div class="hero-cta">
                     <div class="qr-card">
-                        <img src="img/qr-placeholder.svg" alt="CÃ³digo QR de ejemplo" class="qr-image" data-src-bind="qrImage" loading="eager" decoding="async" fetchpriority="high">
+                        <img src="img/qr-placeholder.svg" alt="Código QR de ejemplo" class="qr-image" data-src-bind="qrImage" loading="eager" decoding="async" fetchpriority="high">
                         <div>
-                            <p class="qr-kicker" data-bind="qrKicker">LlÃ©vatelo con</p>
+                            <p class="qr-kicker" data-bind="qrKicker">Llévatelo con</p>
                             <strong data-bind="qrOffer">0% de inicial</strong>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
             <article class="highlight-card">
                 <img src="img/product-1.svg" alt="Producto destacado 1" data-src-bind="feature1Image" loading="eager" decoding="async" fetchpriority="high">
                 <div>
-                    <h3 data-bind="feature1Title">SofÃ¡ modular</h3>
+                    <h3 data-bind="feature1Title">Sofá modular</h3>
                     <p data-bind="feature1Description">Confort amplio para salas modernas y familiares.</p>
                 </div>
             </article>
@@ -92,30 +92,30 @@
                 <img src="img/product-2.svg" alt="Producto destacado 2" data-src-bind="feature2Image" loading="eager" decoding="async" fetchpriority="high">
                 <div>
                     <h3 data-bind="feature2Title">Juego de comedor</h3>
-                    <p data-bind="feature2Description">Una opciÃ³n elegante para reuniones y comidas.</p>
+                    <p data-bind="feature2Description">Una opción elegante para reuniones y comidas.</p>
                 </div>
             </article>
             <article class="highlight-card">
                 <img src="img/product-3.svg" alt="Producto destacado 3" data-src-bind="feature3Image" loading="eager" decoding="async" fetchpriority="high">
                 <div>
                     <h3 data-bind="feature3Title">Silla ejecutiva</h3>
-                    <p data-bind="feature3Description">DiseÃ±ada para jornadas cÃ³modas en oficina.</p>
+                    <p data-bind="feature3Description">Diseñada para jornadas cómodas en oficina.</p>
                 </div>
             </article>
             <article class="highlight-card">
                 <img src="img/product-4.svg" alt="Producto destacado 4" data-src-bind="feature4Image" loading="eager" decoding="async" fetchpriority="high">
                 <div>
                     <h3 data-bind="feature4Title">Centro de TV</h3>
-                    <p data-bind="feature4Description">OrganizaciÃ³n y estilo para tu entretenimiento.</p>
+                    <p data-bind="feature4Description">Organización y estilo para tu entretenimiento.</p>
                 </div>
             </article>
         </section>
 
         <section class="section-block" id="historia">
             <div class="section-heading">
-                <span class="eyebrow">Historia</span>
-                <h2>La historia de un negocio con visión familiar</h2>
-                <p>
+                <span class="eyebrow" data-bind="historyEyebrow">Historia</span>
+                <h2 data-bind="historyTitle">La historia de un negocio con visión familiar</h2>
+                <p data-bind="historyDescription">
                     JR Soluciones nace con la idea de ofrecer muebles funcionales, bonitos y accesibles para familias
                     que buscan transformar sus espacios sin complicaciones. Con el tiempo, la marca fue creciendo
                     gracias al trato cercano, la confianza y el gusto por los detalles.
@@ -135,7 +135,7 @@
                     <img src="img/story-2.svg" alt="Imagen de ejemplo de muebles" data-src-bind="story2Image" loading="eager" decoding="async">
                     <div>
                         <h3 data-bind="story2Title">Crecimiento</h3>
-                        <p data-bind="story2Description">La variedad de estilos y colecciones fue aumentando para responder a mÃ¡s necesidades.</p>
+                        <p data-bind="story2Description">La variedad de estilos y colecciones fue aumentando para responder a más necesidades.</p>
                     </div>
                 </article>
             </div>
@@ -143,11 +143,11 @@
 
         <section class="section-block" id="colecciones">
             <div class="section-heading">
-                <span class="eyebrow">Colecciones</span>
-                <h2>Productos seleccionados para cada espacio</h2>
-                <p>
-                    AquÃ­ puedes mostrar imÃ¡genes, nombre y descripciÃ³n de cada producto. DejÃ© ejemplos visuales para que
-                    luego cambies cada tarjeta por tus fotografÃ­as reales.
+                <span class="eyebrow" data-bind="collectionsEyebrow">Colecciones</span>
+                <h2 data-bind="collectionsTitle">Productos seleccionados para cada espacio</h2>
+                <p data-bind="collectionsDescription">
+                    Aquí puedes mostrar imágenes, nombre y descripción de cada producto. Dejé ejemplos visuales para que
+                    luego cambies cada tarjeta por tus fotografías reales.
                 </p>
             </div>
 
@@ -155,7 +155,7 @@
                 <article class="collection-card">
                     <img src="img/collection-1.svg" alt="colección sala" data-src-bind="collection1Image" loading="eager" decoding="async">
                     <h3 data-bind="collection1Title">Sala Estilo Urbano</h3>
-                    <p data-bind="collection1Description">SofÃ¡s y mesas auxiliares pensadas para espacios modernos.</p>
+                    <p data-bind="collection1Description">Sofás y mesas auxiliares pensadas para espacios modernos.</p>
                 </article>
                 <article class="collection-card">
                     <img src="img/collection-2.svg" alt="colección comedor" data-src-bind="collection2Image" loading="eager" decoding="async">
@@ -177,17 +177,17 @@
 
         <section class="section-block about" id="nosotros">
             <div class="section-heading">
-                <span class="eyebrow">Nosotros</span>
-                <h2>misión, visión y valores</h2>
+                <span class="eyebrow" data-bind="aboutEyebrow">Nosotros</span>
+                <h2 data-bind="aboutTitle">Misión, visión y valores</h2>
             </div>
 
             <div class="about-grid">
                 <article class="info-card">
-                    <h3 data-bind="missionTitle">misión</h3>
+                    <h3 data-bind="missionTitle">Misión</h3>
                     <p data-bind="missionDescription">Ofrecer muebles de calidad y una atención cercana que ayude a cada cliente a amueblar su espacio ideal.</p>
                 </article>
                 <article class="info-card">
-                    <h3 data-bind="visionTitle">visión</h3>
+                    <h3 data-bind="visionTitle">Visión</h3>
                     <p data-bind="visionDescription">Ser una mueblería reconocida por su estilo, confianza y capacidad de adaptarse a las necesidades del mercado.</p>
                 </article>
                 <article class="info-card">
@@ -200,7 +200,7 @@
         <section class="section-card owner">
             <img src="img/owner-placeholder.svg" alt="Foto del propietario" class="owner-photo" data-src-bind="ownerImage" loading="eager" decoding="async" fetchpriority="high">
             <div class="owner-content">
-                <span class="eyebrow">Propietario</span>
+                <span class="eyebrow" data-bind="ownerTitle">Propietario</span>
                 <h2 data-bind="ownerName">Juan Rodríguez</h2>
                 <p class="owner-role" data-bind="ownerRole">Propietario y Gerente General</p>
                 <p class="owner-contact-title" data-bind="ownerContactTitle">Contacto</p>
@@ -233,7 +233,7 @@
                     <p class="eyebrow">administración</p>
                     <h2 id="adminModalTitle">Editar contenido del sitio</h2>
                 </div>
-                <button type="button" class="icon-button" data-admin-close aria-label="Cerrar editor">Ã—</button>
+                <button type="button" class="icon-button" data-admin-close aria-label="Cerrar editor">×</button>
             </div>
 
             <form class="admin-login" id="adminLoginForm">
@@ -243,8 +243,8 @@
                     <input type="email" id="adminEmail" placeholder="admin@correo.com" autocomplete="username">
                 </label>
                 <label>
-                    ContraseÃ±a
-                    <input type="password" id="adminPassword" placeholder="Tu contraseÃ±a" autocomplete="current-password">
+                    Contraseña
+                    <input type="password" id="adminPassword" placeholder="Tu contraseña" autocomplete="current-password">
                 </label>
                 <button type="submit" class="btn-primary">Entrar</button>
                 <p class="admin-feedback" id="adminLoginFeedback"></p>
@@ -263,7 +263,7 @@
     </div>
 
     <footer class="site-footer">
-        <p>Desarrollado por AR Multimedia Services</p>
+        <p data-bind="footerText">Desarrollado por AR Multimedia Services</p>
     </footer>
 
     <div class="site-toast" id="siteToast" aria-live="polite" aria-atomic="true" hidden></div>

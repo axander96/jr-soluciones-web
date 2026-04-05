@@ -38,33 +38,38 @@ const isEditWindow = new URLSearchParams(window.location.search).get("edit") ===
 const defaults = {
     brandTitle: "JR Soluciones",
     brandLogo: "img/logo-placeholder.svg",
+    navInicio: "Inicio",
+    navHistoria: "Historia",
+    navColecciones: "Colecciones",
+    navNosotros: "Nosotros",
+    heroEyebrow: "Diseño, comodidad y calidad",
     heroTitle: "JR Soluciones",
     heroDescription:
         "Amueblamos tus espacios con estilo, durabilidad y atención cercana. Encuentra muebles para tu hogar, oficina o negocio con el toque elegante que distingue a la marca.",
-    qrKicker: "LlÃ©vatelo con",
+    qrKicker: "Llévatelo con",
     qrOffer: "0% de inicial",
     heroImage: "img/hero-placeholder.svg",
     qrImage: "img/qr-placeholder.svg",
-    feature1Title: "SofÃ¡ modular",
+    feature1Title: "Sofá modular",
     feature1Description: "Confort amplio para salas modernas y familiares.",
     feature1Image: "img/product-1.svg",
     feature2Title: "Juego de comedor",
-    feature2Description: "Una opciÃ³n elegante para reuniones y comidas.",
+    feature2Description: "Una opción elegante para reuniones y comidas.",
     feature2Image: "img/product-2.svg",
     feature3Title: "Silla ejecutiva",
-    feature3Description: "DiseÃ±ada para jornadas cÃ³modas en oficina.",
+    feature3Description: "Diseñada para jornadas cómodas en oficina.",
     feature3Image: "img/product-3.svg",
     feature4Title: "Centro de TV",
-    feature4Description: "OrganizaciÃ³n y estilo para tu entretenimiento.",
+    feature4Description: "Organización y estilo para tu entretenimiento.",
     feature4Image: "img/product-4.svg",
     story1Title: "Origen",
     story1Description: "Un emprendimiento construido paso a paso, con enfoque en la calidad y el servicio.",
     story1Image: "img/story-1.svg",
     story2Title: "Crecimiento",
-    story2Description: "La variedad de estilos y colecciones fue aumentando para responder a mÃ¡s necesidades.",
+    story2Description: "La variedad de estilos y colecciones fue aumentando para responder a más necesidades.",
     story2Image: "img/story-2.svg",
     collection1Title: "Sala Estilo Urbano",
-    collection1Description: "SofÃ¡s y mesas auxiliares pensadas para espacios modernos.",
+    collection1Description: "Sofás y mesas auxiliares pensadas para espacios modernos.",
     collection1Image: "img/collection-1.svg",
     collection2Title: "Comedor Premium",
     collection2Description: "Piezas elegantes para compartir en familia o en negocios.",
@@ -75,6 +80,17 @@ const defaults = {
     collection4Title: "Descanso Confort",
     collection4Description: "Opciones de dormitorio pensadas para descansar mejor.",
     collection4Image: "img/collection-4.svg",
+    historyTitle: "La historia de un negocio con visión familiar",
+    historyDescription:
+        "JR Soluciones nace con la idea de ofrecer muebles funcionales, bonitos y accesibles para familias que buscan transformar sus espacios sin complicaciones. Con el tiempo, la marca fue creciendo gracias al trato cercano, la confianza y el gusto por los detalles.",
+    historyEyebrow: "Historia",
+    collectionsTitle: "Productos seleccionados para cada espacio",
+    collectionsDescription:
+        "Aquí puedes mostrar imágenes, nombre y descripción de cada producto. Dejé ejemplos visuales para que luego cambies cada tarjeta por tus fotografías reales.",
+    collectionsEyebrow: "Colecciones",
+    aboutTitle: "Misión, visión y valores",
+    aboutEyebrow: "Nosotros",
+    ownerTitle: "Propietario",
     missionTitle: "Misión",
     missionDescription:
         "Ofrecer muebles de calidad y una atención cercana que ayude a cada cliente a amueblar su espacio ideal.",
@@ -95,9 +111,20 @@ const defaults = {
     ownerAddressHref: "https://www.google.com/maps/search/?api=1&query=Calle%20Principal%20%23123%2C%20Santo%20Domingo%2C%20Rep%C3%BAblica%20Dominicana",
     ownerAddress: "Calle Principal #123, Santo Domingo, República Dominicana",
     ownerImage: "img/owner-placeholder.svg",
+    footerText: "Desarrollado por AR Multimedia Services",
 };
 
 const fieldGroups = [
+    {
+        title: "Navegación",
+        fields: [
+            { key: "navInicio", label: "Inicio", type: "text" },
+            { key: "navHistoria", label: "Historia", type: "text" },
+            { key: "navColecciones", label: "Colecciones", type: "text" },
+            { key: "navNosotros", label: "Nosotros", type: "text" },
+            { key: "footerText", label: "Pie de página", type: "text", wide: true },
+        ],
+    },
     {
         title: "Marca",
         fields: [
@@ -108,8 +135,9 @@ const fieldGroups = [
     {
         title: "Inicio",
         fields: [
+            { key: "heroEyebrow", label: "Texto superior", type: "text" },
             { key: "heroTitle", label: "Título principal", type: "text" },
-            { key: "heroDescription", label: "DescripciÃ³n corta", type: "textarea", wide: true },
+            { key: "heroDescription", label: "Descripción corta", type: "textarea", wide: true },
             { key: "heroImage", label: "Imagen principal", type: "image" },
             { key: "qrKicker", label: "Texto del QR", type: "text" },
             { key: "qrOffer", label: "Oferta del QR", type: "text" },
@@ -120,22 +148,25 @@ const fieldGroups = [
         title: "Productos destacados",
         fields: [
             { key: "feature1Title", label: "Producto 1 Título", type: "text" },
-            { key: "feature1Description", label: "Producto 1 descripciÃ³n", type: "textarea" },
+            { key: "feature1Description", label: "Producto 1 descripción", type: "textarea" },
             { key: "feature1Image", label: "Producto 1 imagen", type: "image" },
             { key: "feature2Title", label: "Producto 2 Título", type: "text" },
-            { key: "feature2Description", label: "Producto 2 descripciÃ³n", type: "textarea" },
+            { key: "feature2Description", label: "Producto 2 descripción", type: "textarea" },
             { key: "feature2Image", label: "Producto 2 imagen", type: "image" },
             { key: "feature3Title", label: "Producto 3 Título", type: "text" },
-            { key: "feature3Description", label: "Producto 3 descripciÃ³n", type: "textarea" },
+            { key: "feature3Description", label: "Producto 3 descripción", type: "textarea" },
             { key: "feature3Image", label: "Producto 3 imagen", type: "image" },
             { key: "feature4Title", label: "Producto 4 título", type: "text" },
-            { key: "feature4Description", label: "Producto 4 descripciÃ³n", type: "textarea" },
+            { key: "feature4Description", label: "Producto 4 descripción", type: "textarea" },
             { key: "feature4Image", label: "Producto 4 imagen", type: "image" },
         ],
     },
     {
         title: "Historia",
         fields: [
+            { key: "historyEyebrow", label: "Etiqueta", type: "text" },
+            { key: "historyTitle", label: "Título de la sección", type: "text", wide: true },
+            { key: "historyDescription", label: "Texto de la sección", type: "textarea", wide: true },
             { key: "story1Title", label: "Historia 1 título", type: "text" },
             { key: "story1Description", label: "Historia 1 texto", type: "textarea", wide: true },
             { key: "story1Image", label: "Historia 1 imagen", type: "image" },
@@ -147,6 +178,9 @@ const fieldGroups = [
     {
         title: "Colecciones",
         fields: [
+            { key: "collectionsEyebrow", label: "Etiqueta", type: "text" },
+            { key: "collectionsTitle", label: "Título de la sección", type: "text", wide: true },
+            { key: "collectionsDescription", label: "Texto de la sección", type: "textarea", wide: true },
             { key: "collection1Title", label: "Colección 1 Título", type: "text" },
             { key: "collection1Description", label: "Colección 1 texto", type: "textarea" },
             { key: "collection1Image", label: "Colección 1 imagen", type: "image" },
@@ -164,6 +198,8 @@ const fieldGroups = [
     {
         title: "Nosotros",
         fields: [
+            { key: "aboutEyebrow", label: "Etiqueta", type: "text" },
+            { key: "aboutTitle", label: "Título de la sección", type: "text", wide: true },
             { key: "missionTitle", label: "Misión Título", type: "text" },
             { key: "missionDescription", label: "Misión texto", type: "textarea", wide: true },
             { key: "visionTitle", label: "Visión Título", type: "text" },
@@ -175,6 +211,7 @@ const fieldGroups = [
     {
         title: "Propietario",
         fields: [
+            { key: "ownerTitle", label: "Título de la sección", type: "text", wide: true },
             { key: "ownerName", label: "Nombre", type: "text" },
             { key: "ownerRole", label: "Cargo", type: "text" },
             { key: "ownerContactTitle", label: "Título contacto", type: "text" },
@@ -568,7 +605,7 @@ const buildEditor = () => {
                 input.disabled = true;
 
                 const helper = document.createElement("small");
-                helper.textContent = "Sube una imagen y se guardarÃ¡ automÃ¡ticamente en Firebase Storage.";
+                helper.textContent = "Sube una imagen y se guardará automáticamente en Firebase Storage.";
 
                 wrapper.append(preview, input, helper);
             } else {
@@ -714,7 +751,7 @@ adminLoginForm?.addEventListener("submit", async (event) => {
         }
         closeModal();
     } catch (error) {
-        adminLoginFeedback.textContent = "No se pudo iniciar sesión. Revisa correo y contraseÃ±a.";
+        adminLoginFeedback.textContent = "No se pudo iniciar sesión. Revisa correo y contraseña.";
     }
 });
 
