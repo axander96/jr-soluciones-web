@@ -69,10 +69,10 @@ img {
 .brand-logo {
     width: clamp(120px, 16vw, 210px);
     height: 64px;
-    border-radius: 16px;
+    border-radius: 0;
     object-fit: contain;
-    background: linear-gradient(135deg, #17324d, #244f76);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    background: transparent;
+    box-shadow: none;
 }
 
 .brand-eyebrow,
