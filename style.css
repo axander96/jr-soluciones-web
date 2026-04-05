@@ -450,7 +450,7 @@ main {
 }
 
 .owner-contact-title {
-    margin: 52px 0 2px;
+    margin: 68px 0 2px;
     color: #000;
     font-size: 0.95rem;
     font-weight: 800;
@@ -469,8 +469,9 @@ main {
 
 .owner-role {
     margin-top: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
     font-weight: 700;
+    color: var(--navy);
 }
 
 .owner-content > p {
@@ -483,17 +484,17 @@ main {
 }
 
 .owner-content > p:nth-of-type(3) {
-    color: var(--muted);
+    color: var(--navy);
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
 .owner-content > p:nth-of-type(3) strong {
-    color: var(--muted);
+    color: #000;
 }
 
 .owner-content > p:nth-of-type(3) a {
-    color: var(--navy);
+    color: #1b2f44;
 }
 
 .owner-content > p:nth-of-type(4) {
@@ -505,17 +506,7 @@ main {
     color: #000;
 }
 
-.owner-content > p:nth-of-type(5) {
-    color: #24384f;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.owner-content > p:nth-of-type(5) strong {
-    display: none;
-}
-
-.owner-content > p:nth-of-type(5) a {
+.owner-content > p:nth-of-type(4) a {
     color: #1b2f44;
 }
 
