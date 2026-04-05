@@ -603,7 +603,7 @@ adminEditBtn?.addEventListener("click", () => {
     closeModal();
 });
 
-adminSaveInlineBtn?.addEventListener("click", saveEditorChanges);
+adminSaveInlineBtn?.addEventListener("click", (event) => saveEditorChanges(event));
 
 adminCloseEditBtn?.addEventListener("click", () => {
     const targetUrl = new URL(window.location.href);
