@@ -23,6 +23,20 @@ In Firebase Console:
 - If `firebase-config.js` still has `REPLACE_ME`, the site works in fallback mode.
 - When the real config is added, `main.js` will try to load the document `site/home` from Firestore.
 - The page will use any matching fields from that document to replace the on-page text.
+- The admin panel only allows editing after signing in with the admin email.
+- Image fields upload to Firebase Storage automatically when you select a file.
+
+## One more Firebase step
+
+Firebase Storage must be initialized once in the Console before image uploads work.
+
+1. Open Firebase Console.
+2. Go to **Storage**.
+3. Click **Get started**.
+4. Choose the default location Firebase suggests for the project.
+5. Finish the setup.
+
+After that, the storage rules in `storage.rules` can be deployed normally.
 
 ## Suggested Firestore document
 
