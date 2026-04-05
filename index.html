@@ -207,6 +207,17 @@
                 <p><strong>Celular:</strong> <a href="tel:+18095550123" data-bind="ownerPhone" data-bind-href="ownerPhoneHref">+1 (809) 555-0123</a></p>
                 <p class="owner-visit-title" data-bind="ownerVisitTitle">Visítanos</p>
                 <p class="owner-address"><strong>Dirección:</strong> <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" data-bind="ownerAddress" data-bind-href="ownerAddressHref">Calle Principal #123, Santo Domingo, República Dominicana</a></p>
+                <div class="owner-map-field">
+                    <label class="owner-map-field__label" for="ownerMapHrefInput">URL Google Map</label>
+                    <input
+                        id="ownerMapHrefInput"
+                        type="url"
+                        class="owner-map-field__input"
+                        data-inline-key="ownerAddressHref"
+                        placeholder="Pega aquí el enlace de Google Maps"
+                    >
+                    <small class="owner-map-field__help">Este enlace se abrirá cuando el cliente pulse la dirección.</small>
+                </div>
             </div>
             <div class="owner-socials" aria-label="Redes sociales">
                 <a class="owner-social owner-social--whatsapp" href="https://wa.me/18095550123" target="_blank" rel="noopener noreferrer" data-bind-href="ownerWhatsApp" data-edit-link-key="ownerWhatsApp" aria-label="WhatsApp">

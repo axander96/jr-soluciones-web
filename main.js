@@ -28,6 +28,7 @@ const adminCloseEditBtn = document.getElementById("adminCloseEditBtn");
 const editBar = document.getElementById("editBar");
 const editBarStatus = document.getElementById("editBarStatus");
 const siteToast = document.getElementById("siteToast");
+const ownerMapHrefInput = document.getElementById("ownerMapHrefInput");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
@@ -329,7 +330,19 @@ const applyContent = (data = {}) => {
             }
         }
     });
+
+    if (ownerMapHrefInput instanceof HTMLInputElement) {
+        ownerMapHrefInput.value = data.ownerAddressHref ?? "";
+    }
 };
+
+ownerMapHrefInput?.addEventListener("input", () => {
+    currentData.ownerAddressHref = ownerMapHrefInput.value.trim();
+    currentData = normalizeContactData(currentData);
+    writeCachedContent(currentData);
+    applyContent(currentData);
+    syncEditor(currentData);
+});
 
 const normalizeContactData = (data = {}) => {
     const phoneValue = String(data.ownerPhone ?? defaults.ownerPhone);
@@ -489,7 +502,8 @@ document.addEventListener("input", (event) => {
         return;
     }
 
-    const value = node.innerText.trim();
+    const value =
+        node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement ? node.value.trim() : node.innerText.trim();
     currentData[key] = value;
 
     if (key === "ownerPhone") {
