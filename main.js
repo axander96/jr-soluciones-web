@@ -182,7 +182,14 @@ const fieldGroups = [
             { key: "ownerVisitTitle", label: "Título visita", type: "text" },
             { key: "ownerFacebook", label: "Facebook", type: "text" },
             { key: "ownerInstagram", label: "Instagram", type: "text" },
-            { key: "ownerAddressHref", label: "Enlace de Google Maps", type: "text", wide: true },
+            {
+                key: "ownerAddressHref",
+                label: "Enlace de Google Maps",
+                type: "text",
+                wide: true,
+                helper:
+                    "Pega aquí el enlace de tu negocio en Google Maps. Ese enlace se abrirá cuando el cliente pulse la dirección.",
+            },
             { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
             { key: "ownerImage", label: "Foto del propietario", type: "image" },
         ],
@@ -572,6 +579,13 @@ const buildEditor = () => {
                 }
                 control.dataset.fieldKey = field.key;
                 wrapper.appendChild(control);
+            }
+
+            if (field.helper && field.type !== "image") {
+                const helper = document.createElement("small");
+                helper.className = "editor-help";
+                helper.textContent = field.helper;
+                wrapper.appendChild(helper);
             }
 
             grid.appendChild(wrapper);

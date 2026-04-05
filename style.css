@@ -955,6 +955,10 @@ main {
     border: 1px solid rgba(22, 50, 79, 0.12);
 }
 
+.editor-field--wide + .editor-field--wide {
+    margin-top: 2px;
+}
+
 .editor-field textarea {
     min-height: 96px;
     resize: vertical;
@@ -972,6 +976,12 @@ main {
 .editor-field small {
     color: var(--muted);
     line-height: 1.45;
+}
+
+.editor-help {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.84rem;
 }
 
 .editor-field--wide {
