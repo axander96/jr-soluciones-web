@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JR Soluciones | Mueblería</title>
-    <meta name="description" content="JR Soluciones, mueblería con historia, colecciones, misión, visión, valores y contacto directo por WhatsApp.">
+    <title>JR Soluciones</title>
+    <meta name="description" content="JR Soluciones, con historia, colecciones, misión, visión, valores y contacto directo por WhatsApp.">
     <link rel="preconnect" href="https://firebasestorage.googleapis.com">
     <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com">
     <link rel="stylesheet" href="style.css">
@@ -27,10 +27,9 @@
 
     <header class="site-header">
         <div class="brand">
-            <img src="img/logo-placeholder.svg" alt="Logo JR Soluciones" class="brand-logo" loading="eager" decoding="async" fetchpriority="high">
+            <img src="img/logo-placeholder.svg" alt="Logo JR Soluciones" class="brand-logo" data-src-bind="brandLogo" loading="eager" decoding="async" fetchpriority="high">
             <div>
-                <p class="brand-eyebrow">Mueblería</p>
-                <h1>JR Soluciones</h1>
+                <h1 data-bind="brandTitle">JR Soluciones</h1>
             </div>
         </div>
 
@@ -227,15 +226,28 @@
                 <p class="admin-feedback" id="adminLoginFeedback"></p>
             </form>
 
-            <form class="admin-editor" id="adminEditor">
-                <div class="editor-toolbar">
-                    <p id="editorUser">Sin sesión</p>
-                    <button type="submit" class="btn-primary" id="adminSaveBtn">Guardar cambios</button>
-                </div>
+            <div class="admin-workspace" id="adminWorkspace" hidden>
+                <section class="admin-editor-column">
+                    <div class="editor-toolbar">
+                        <p id="editorUser">Sin sesión</p>
+                        <button type="submit" class="btn-primary" id="adminSaveBtn" form="adminEditor">Guardar cambios</button>
+                    </div>
 
-                <div class="editor-grid" id="adminFields"></div>
-                <p class="admin-feedback" id="adminSaveFeedback"></p>
-            </form>
+                    <form class="admin-editor" id="adminEditor">
+                        <div class="editor-grid" id="adminFields"></div>
+                        <p class="admin-feedback" id="adminSaveFeedback"></p>
+                    </form>
+                </section>
+
+                <section class="admin-preview-panel" aria-label="Vista previa del cliente">
+                    <div class="admin-preview-header">
+                        <span class="eyebrow">Vista cliente</span>
+                        <h3>Así verá la página tu cliente</h3>
+                        <p>Todo se actualiza en tiempo real mientras editas.</p>
+                    </div>
+                    <div class="admin-preview" id="adminPreview"></div>
+                </section>
+            </div>
         </div>
     </div>
 

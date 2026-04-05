@@ -23,6 +23,8 @@ const adminFields = document.getElementById("adminFields");
 const adminSaveFeedback = document.getElementById("adminSaveFeedback");
 const adminSaveBtn = document.getElementById("adminSaveBtn");
 const editorUser = document.getElementById("editorUser");
+const adminWorkspace = document.getElementById("adminWorkspace");
+const adminPreview = document.getElementById("adminPreview");
 const siteToast = document.getElementById("siteToast");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const sections = navLinks
@@ -31,6 +33,8 @@ const sections = navLinks
 const contentCacheKey = "jr-soluciones-web:site-home";
 
 const defaults = {
+    brandTitle: "JR Soluciones",
+    brandLogo: "img/logo-placeholder.svg",
     heroTitle: "JR Soluciones",
     heroDescription:
         "Amueblamos tus espacios con estilo, durabilidad y atención cercana. Encuentra muebles para tu hogar, oficina o negocio con el toque elegante que distingue a la marca.",
@@ -86,6 +90,13 @@ const defaults = {
 };
 
 const fieldGroups = [
+    {
+        title: "Marca",
+        fields: [
+            { key: "brandTitle", label: "Nombre de la marca", type: "text" },
+            { key: "brandLogo", label: "Logo principal", type: "image" },
+        ],
+    },
     {
         title: "Inicio",
         fields: [
@@ -205,6 +216,14 @@ const writeCachedContent = (data) => {
 
 const normalizePhone = (value) => String(value ?? "").replace(/[^0-9]/g, "");
 
+const escapeHtml = (value) =>
+    String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+
 const showToast = (message, tone = "success") => {
     if (!siteToast) {
         return;
@@ -248,6 +267,63 @@ const applyContent = (data = {}) => {
             hrefNode.href = value;
         }
     });
+};
+
+const renderPreviewCard = (title, image, text) => `
+    <article class="preview-card">
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}">
+        <div>
+            <h4>${escapeHtml(title)}</h4>
+            <p>${escapeHtml(text)}</p>
+        </div>
+    </article>
+`;
+
+const renderAdminPreview = (data = {}) => {
+    if (!adminPreview) {
+        return;
+    }
+
+    adminPreview.innerHTML = `
+        <header class="preview-hero">
+            <div class="preview-brand">
+                <img src="${escapeHtml(data.brandLogo ?? defaults.brandLogo)}" alt="${escapeHtml(data.brandTitle ?? defaults.brandTitle)}">
+                <div>
+                    <h4>${escapeHtml(data.brandTitle ?? defaults.brandTitle)}</h4>
+                    <p>Vista previa del cliente</p>
+                </div>
+            </div>
+            <div class="preview-hero-copy">
+                <span>Inicio</span>
+                <h3>${escapeHtml(data.heroTitle ?? defaults.heroTitle)}</h3>
+                <p>${escapeHtml(data.heroDescription ?? defaults.heroDescription)}</p>
+            </div>
+        </header>
+        <section class="preview-grid preview-grid--highlights">
+            ${renderPreviewCard(data.feature1Title ?? defaults.feature1Title, data.feature1Image ?? defaults.feature1Image, data.feature1Description ?? defaults.feature1Description)}
+            ${renderPreviewCard(data.feature2Title ?? defaults.feature2Title, data.feature2Image ?? defaults.feature2Image, data.feature2Description ?? defaults.feature2Description)}
+            ${renderPreviewCard(data.feature3Title ?? defaults.feature3Title, data.feature3Image ?? defaults.feature3Image, data.feature3Description ?? defaults.feature3Description)}
+            ${renderPreviewCard(data.feature4Title ?? defaults.feature4Title, data.feature4Image ?? defaults.feature4Image, data.feature4Description ?? defaults.feature4Description)}
+        </section>
+        <section class="preview-grid preview-grid--story">
+            ${renderPreviewCard(data.story1Title ?? defaults.story1Title, data.story1Image ?? defaults.story1Image, data.story1Description ?? defaults.story1Description)}
+            ${renderPreviewCard(data.story2Title ?? defaults.story2Title, data.story2Image ?? defaults.story2Image, data.story2Description ?? defaults.story2Description)}
+        </section>
+        <section class="preview-grid preview-grid--collections">
+            ${renderPreviewCard(data.collection1Title ?? defaults.collection1Title, data.collection1Image ?? defaults.collection1Image, data.collection1Description ?? defaults.collection1Description)}
+            ${renderPreviewCard(data.collection2Title ?? defaults.collection2Title, data.collection2Image ?? defaults.collection2Image, data.collection2Description ?? defaults.collection2Description)}
+            ${renderPreviewCard(data.collection3Title ?? defaults.collection3Title, data.collection3Image ?? defaults.collection3Image, data.collection3Description ?? defaults.collection3Description)}
+            ${renderPreviewCard(data.collection4Title ?? defaults.collection4Title, data.collection4Image ?? defaults.collection4Image, data.collection4Description ?? defaults.collection4Description)}
+        </section>
+        <section class="preview-owner">
+            <img src="${escapeHtml(data.ownerImage ?? defaults.ownerImage)}" alt="${escapeHtml(data.ownerName ?? defaults.ownerName)}">
+            <div>
+                <h3>${escapeHtml(data.ownerName ?? defaults.ownerName)}</h3>
+                <p>${escapeHtml(data.ownerRole ?? defaults.ownerRole)}</p>
+                <p>${escapeHtml(data.ownerAddress ?? defaults.ownerAddress)}</p>
+            </div>
+        </section>
+    `;
 };
 
 const syncEditor = (data = {}) => {
@@ -325,6 +401,9 @@ const setModalMode = (mode) => {
     adminModal.dataset.mode = mode;
     adminLoginForm.hidden = !isLogin;
     adminEditor.hidden = !isEditor;
+    if (adminWorkspace) {
+        adminWorkspace.hidden = !isEditor;
+    }
     adminLoginForm.classList.toggle("is-visible", isLogin);
     adminEditor.classList.toggle("is-visible", isEditor);
     adminModal.hidden = false;
@@ -395,6 +474,7 @@ adminLoginBtn?.addEventListener("click", () => {
 
 adminEditBtn?.addEventListener("click", () => {
     syncEditor(currentData);
+    renderAdminPreview(currentData);
     setModalMode("editor");
 });
 
@@ -405,6 +485,13 @@ adminLogoutBtn?.addEventListener("click", async () => {
 
 adminModal?.addEventListener("click", (event) => {
     if (event.target.matches("[data-admin-close]")) {
+        if (credential?.user?.email === adminConfig.adminEmail) {
+            syncEditor(currentData);
+            renderAdminPreview(currentData);
+            setModalMode("editor");
+            return;
+        }
+
         closeModal();
     }
 });
@@ -456,6 +543,7 @@ const saveEditorChanges = async (event) => {
         writeCachedContent(currentData);
         applyContent(currentData);
         syncEditor(currentData);
+        renderAdminPreview(currentData);
         adminSaveFeedback.textContent = "Cambios guardados correctamente.";
         showToast("Cambios guardados correctamente.");
     } catch (error) {
@@ -468,7 +556,6 @@ const saveEditorChanges = async (event) => {
 };
 
 adminEditor?.addEventListener("submit", saveEditorChanges);
-adminSaveBtn?.addEventListener("click", saveEditorChanges);
 
 adminFields?.addEventListener("change", async (event) => {
     const input = event.target;
@@ -500,22 +587,41 @@ adminFields?.addEventListener("change", async (event) => {
         if (preview) {
             preview.src = url;
         }
+        renderAdminPreview(currentData);
         adminSaveFeedback.textContent = "Imagen lista. Recuerda guardar los cambios.";
     } catch (error) {
         adminSaveFeedback.textContent = "No se pudo subir la imagen.";
     }
 });
 
+adminFields?.addEventListener("input", (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement)) {
+        return;
+    }
+
+    const fieldKey = input.dataset.fieldKey;
+    if (!fieldKey) {
+        return;
+    }
+
+    currentData[fieldKey] = input.value;
+    applyContent(currentData);
+    renderAdminPreview(currentData);
+});
+
 firebaseStatus.textContent = getFirebaseStatus();
 buildEditor();
 syncEditor(defaults);
 applyContent(defaults);
+renderAdminPreview(defaults);
 
 const cachedContent = readCachedContent();
 if (cachedContent) {
     currentData = { ...defaults, ...cachedContent };
     applyContent(currentData);
     syncEditor(currentData);
+    renderAdminPreview(currentData);
 }
 
 watchSiteContent((data) => {
@@ -523,6 +629,7 @@ watchSiteContent((data) => {
         currentData = { ...defaults };
         applyContent(currentData);
         syncEditor(currentData);
+        renderAdminPreview(currentData);
         writeCachedContent(currentData);
         return;
     }
@@ -530,6 +637,7 @@ watchSiteContent((data) => {
     currentData = { ...defaults, ...data };
     applyContent(currentData);
     syncEditor(currentData);
+    renderAdminPreview(currentData);
     writeCachedContent(currentData);
 });
 
