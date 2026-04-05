@@ -13,6 +13,12 @@ import {
     serverTimestamp,
     setDoc,
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import {
+    getDownloadURL,
+    getStorage,
+    ref as storageRef,
+    uploadBytes,
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
 const requiredKeys = ["apiKey", "authDomain", "projectId", "storageBucket", "messagingSenderId", "appId"];
 
@@ -22,6 +28,7 @@ const isReady = (config) =>
 let app = null;
 let db = null;
 let auth = null;
+let storage = null;
 
 export function initFirebase() {
     if (!isReady(firebaseConfig)) {
@@ -32,9 +39,10 @@ export function initFirebase() {
         app = initializeApp(firebaseConfig);
         db = getFirestore(app);
         auth = getAuth(app);
+        storage = getStorage(app);
     }
 
-    return { app, db, auth };
+    return { app, db, auth, storage };
 }
 
 export function getFirebaseStatus() {
@@ -98,4 +106,16 @@ export async function saveSiteContent(payload) {
         },
         { merge: true }
     );
+}
+
+export async function uploadSiteImage(file, path) {
+    const services = initFirebase();
+
+    if (!services?.storage) {
+        throw new Error("Firebase Storage no está configurado.");
+    }
+
+    const fileRef = storageRef(services.storage, path);
+    const result = await uploadBytes(fileRef, file);
+    return getDownloadURL(result.ref);
 }

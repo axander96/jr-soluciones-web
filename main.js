@@ -5,6 +5,7 @@ import {
     logout,
     onFirebaseAuthChange,
     saveSiteContent,
+    uploadSiteImage,
 } from "./firebase.js";
 import { adminConfig } from "./firebase-config.js";
 
@@ -87,10 +88,10 @@ const fieldGroups = [
         fields: [
             { key: "heroTitle", label: "Título principal", type: "text" },
             { key: "heroDescription", label: "Descripción corta", type: "textarea", wide: true },
-            { key: "heroImage", label: "Imagen principal", type: "text" },
+            { key: "heroImage", label: "Imagen principal", type: "image" },
             { key: "qrKicker", label: "Texto del QR", type: "text" },
             { key: "qrOffer", label: "Oferta del QR", type: "text" },
-            { key: "qrImage", label: "Imagen QR", type: "text" },
+            { key: "qrImage", label: "Imagen QR", type: "image" },
         ],
     },
     {
@@ -98,16 +99,16 @@ const fieldGroups = [
         fields: [
             { key: "feature1Title", label: "Producto 1 título", type: "text" },
             { key: "feature1Description", label: "Producto 1 descripción", type: "textarea" },
-            { key: "feature1Image", label: "Producto 1 imagen", type: "text" },
+            { key: "feature1Image", label: "Producto 1 imagen", type: "image" },
             { key: "feature2Title", label: "Producto 2 título", type: "text" },
             { key: "feature2Description", label: "Producto 2 descripción", type: "textarea" },
-            { key: "feature2Image", label: "Producto 2 imagen", type: "text" },
+            { key: "feature2Image", label: "Producto 2 imagen", type: "image" },
             { key: "feature3Title", label: "Producto 3 título", type: "text" },
             { key: "feature3Description", label: "Producto 3 descripción", type: "textarea" },
-            { key: "feature3Image", label: "Producto 3 imagen", type: "text" },
+            { key: "feature3Image", label: "Producto 3 imagen", type: "image" },
             { key: "feature4Title", label: "Producto 4 título", type: "text" },
             { key: "feature4Description", label: "Producto 4 descripción", type: "textarea" },
-            { key: "feature4Image", label: "Producto 4 imagen", type: "text" },
+            { key: "feature4Image", label: "Producto 4 imagen", type: "image" },
         ],
     },
     {
@@ -115,10 +116,10 @@ const fieldGroups = [
         fields: [
             { key: "story1Title", label: "Historia 1 título", type: "text" },
             { key: "story1Description", label: "Historia 1 texto", type: "textarea", wide: true },
-            { key: "story1Image", label: "Historia 1 imagen", type: "text" },
+            { key: "story1Image", label: "Historia 1 imagen", type: "image" },
             { key: "story2Title", label: "Historia 2 título", type: "text" },
             { key: "story2Description", label: "Historia 2 texto", type: "textarea", wide: true },
-            { key: "story2Image", label: "Historia 2 imagen", type: "text" },
+            { key: "story2Image", label: "Historia 2 imagen", type: "image" },
         ],
     },
     {
@@ -126,16 +127,16 @@ const fieldGroups = [
         fields: [
             { key: "collection1Title", label: "Colección 1 título", type: "text" },
             { key: "collection1Description", label: "Colección 1 texto", type: "textarea" },
-            { key: "collection1Image", label: "Colección 1 imagen", type: "text" },
+            { key: "collection1Image", label: "Colección 1 imagen", type: "image" },
             { key: "collection2Title", label: "Colección 2 título", type: "text" },
             { key: "collection2Description", label: "Colección 2 texto", type: "textarea" },
-            { key: "collection2Image", label: "Colección 2 imagen", type: "text" },
+            { key: "collection2Image", label: "Colección 2 imagen", type: "image" },
             { key: "collection3Title", label: "Colección 3 título", type: "text" },
             { key: "collection3Description", label: "Colección 3 texto", type: "textarea" },
-            { key: "collection3Image", label: "Colección 3 imagen", type: "text" },
+            { key: "collection3Image", label: "Colección 3 imagen", type: "image" },
             { key: "collection4Title", label: "Colección 4 título", type: "text" },
             { key: "collection4Description", label: "Colección 4 texto", type: "textarea" },
-            { key: "collection4Image", label: "Colección 4 imagen", type: "text" },
+            { key: "collection4Image", label: "Colección 4 imagen", type: "image" },
         ],
     },
     {
@@ -155,9 +156,9 @@ const fieldGroups = [
             { key: "ownerName", label: "Nombre", type: "text" },
             { key: "ownerRole", label: "Cargo", type: "text" },
             { key: "ownerPhone", label: "Teléfono", type: "text" },
-            { key: "ownerWhatsApp", label: "WhatsApp URL", type: "text" },
+            { key: "ownerWhatsApp", label: "WhatsApp", type: "text" },
             { key: "ownerAddress", label: "Dirección", type: "textarea", wide: true },
-            { key: "ownerImage", label: "Foto del propietario", type: "text" },
+            { key: "ownerImage", label: "Foto del propietario", type: "image" },
         ],
     },
 ];
@@ -205,6 +206,11 @@ const syncEditor = (data = {}) => {
         const key = field.dataset.fieldKey;
         field.value = data[key] ?? "";
     });
+
+    adminFields.querySelectorAll("[data-preview-key]").forEach((preview) => {
+        const key = preview.dataset.previewKey;
+        preview.src = data[key] ?? defaults[key] ?? "";
+    });
 };
 
 const buildEditor = () => {
@@ -213,6 +219,7 @@ const buildEditor = () => {
     fieldGroups.forEach((group) => {
         const groupCard = document.createElement("section");
         groupCard.className = "editor-group";
+
         const title = document.createElement("h3");
         title.textContent = group.title;
         groupCard.appendChild(title);
@@ -223,17 +230,38 @@ const buildEditor = () => {
         group.fields.forEach((field) => {
             const wrapper = document.createElement("label");
             wrapper.className = `editor-field${field.wide ? " editor-field--wide" : ""}`;
-            wrapper.innerHTML = `<span>${field.label}</span>`;
 
-            const control =
-                field.type === "textarea"
-                    ? document.createElement("textarea")
-                    : document.createElement("input");
-            if (field.type !== "textarea") {
-                control.type = "text";
+            const caption = document.createElement("span");
+            caption.textContent = field.label;
+            wrapper.appendChild(caption);
+
+            if (field.type === "image") {
+                const preview = document.createElement("img");
+                preview.className = "editor-preview";
+                preview.dataset.previewKey = field.key;
+                preview.alt = field.label;
+                preview.src = currentData[field.key] ?? defaults[field.key] ?? "";
+
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "image/*";
+                input.dataset.uploadKey = field.key;
+                input.disabled = true;
+
+                const helper = document.createElement("small");
+                helper.textContent = "Sube una imagen y se guardará automáticamente en Firebase Storage.";
+
+                wrapper.append(preview, input, helper);
+            } else {
+                const control =
+                    field.type === "textarea" ? document.createElement("textarea") : document.createElement("input");
+                if (field.type !== "textarea") {
+                    control.type = "text";
+                }
+                control.dataset.fieldKey = field.key;
+                wrapper.appendChild(control);
             }
-            control.dataset.fieldKey = field.key;
-            wrapper.appendChild(control);
+
             grid.appendChild(wrapper);
         });
 
@@ -242,13 +270,12 @@ const buildEditor = () => {
     });
 };
 
-const openModal = (showEditor = false) => {
+const setModalMode = (mode) => {
+    const isLogin = mode === "login";
+    const isEditor = mode === "editor";
+    adminLoginForm.hidden = !isLogin;
+    adminEditor.hidden = !isEditor;
     adminModal.hidden = false;
-    adminLoginForm.hidden = showEditor;
-    adminEditor.hidden = !showEditor;
-    if (showEditor) {
-        adminEditor.scrollTop = 0;
-    }
 };
 
 const closeModal = () => {
@@ -262,21 +289,14 @@ const updateAdminUI = () => {
     adminLoginBtn.hidden = isAdmin;
     adminEditBtn.hidden = !isAdmin;
     adminLogoutBtn.hidden = !isAdmin;
-    adminStatus(isAdmin ? `Sesión activa: ${currentUser.email}` : getFirebaseStatus());
+    firebaseStatus.textContent = isAdmin
+        ? `Sesión activa: ${currentUser.email}`
+        : getFirebaseStatus();
 
-    if (!isAdmin && currentUser) {
-        adminSaveFeedback.textContent = "Tu correo no está autorizado para editar este sitio.";
-    }
+    adminFields.querySelectorAll("[data-upload-key]").forEach((input) => {
+        input.disabled = !isAdmin;
+    });
 };
-
-const adminStatus = (message) => {
-    firebaseStatus.textContent = message;
-};
-
-adminToggle?.addEventListener("click", () => {
-    const collapsed = adminPanel.classList.toggle("collapsed");
-    adminToggle.setAttribute("aria-expanded", String(!collapsed));
-});
 
 const setActiveLink = (id) => {
     navLinks.forEach((link) => {
@@ -284,6 +304,11 @@ const setActiveLink = (id) => {
         link.classList.toggle("active", active);
     });
 };
+
+adminToggle?.addEventListener("click", () => {
+    const collapsed = adminPanel.classList.toggle("collapsed");
+    adminToggle.setAttribute("aria-expanded", String(!collapsed));
+});
 
 const observer = new IntersectionObserver(
     (entries) => {
@@ -304,19 +329,17 @@ const observer = new IntersectionObserver(
 sections.forEach((section) => observer.observe(section));
 
 adminLoginBtn?.addEventListener("click", () => {
-    syncEditor(currentData);
-    openModal(false);
+    setModalMode("login");
 });
 
 adminEditBtn?.addEventListener("click", () => {
     syncEditor(currentData);
-    adminLoginForm.hidden = true;
-    adminEditor.hidden = false;
-    openModal(true);
+    setModalMode("editor");
 });
 
 adminLogoutBtn?.addEventListener("click", async () => {
     await logout();
+    closeModal();
 });
 
 adminModal?.addEventListener("click", (event) => {
@@ -333,10 +356,16 @@ adminLoginForm?.addEventListener("submit", async (event) => {
     const password = document.getElementById("adminPassword").value;
 
     try {
-        await loginWithEmail(email, password);
+        const credential = await loginWithEmail(email, password);
         adminLoginFeedback.textContent = "";
         adminLoginForm.reset();
-        closeModal();
+        if (credential?.user?.email === adminConfig.adminEmail) {
+            editorUser.textContent = `Sesión: ${credential.user.email}`;
+            syncEditor(currentData);
+            setModalMode("editor");
+        } else {
+            closeModal();
+        }
     } catch (error) {
         adminLoginFeedback.textContent = "No se pudo iniciar sesión. Revisa correo y contraseña.";
     }
@@ -347,6 +376,7 @@ adminEditor?.addEventListener("submit", async (event) => {
     adminSaveFeedback.textContent = "Guardando cambios...";
 
     const updated = { ...currentData };
+
     adminFields.querySelectorAll("[data-field-key]").forEach((field) => {
         updated[field.dataset.fieldKey] = field.value.trim();
     });
@@ -359,9 +389,45 @@ adminEditor?.addEventListener("submit", async (event) => {
         await saveSiteContent(updated);
         currentData = { ...defaults, ...updated };
         applyContent(currentData);
+        syncEditor(currentData);
         adminSaveFeedback.textContent = "Cambios guardados correctamente.";
     } catch (error) {
         adminSaveFeedback.textContent = "No se pudieron guardar los cambios.";
+    }
+});
+
+adminFields?.addEventListener("change", async (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) {
+        return;
+    }
+
+    const uploadKey = input.dataset.uploadKey;
+    if (!uploadKey || !input.files?.[0]) {
+        return;
+    }
+
+    if (!currentUser || currentUser.email !== adminConfig.adminEmail) {
+        input.value = "";
+        return;
+    }
+
+    const file = input.files[0];
+    const preview = adminFields.querySelector(`[data-preview-key="${uploadKey}"]`);
+
+    try {
+        adminSaveFeedback.textContent = "Subiendo imagen...";
+        const path = `site/${uploadKey}/${Date.now()}-${file.name}`;
+        const url = await uploadSiteImage(file, path);
+        currentData[uploadKey] = url;
+        input.dataset.uploadedUrl = url;
+        input.value = "";
+        if (preview) {
+            preview.src = url;
+        }
+        adminSaveFeedback.textContent = "Imagen lista. Recuerda guardar los cambios.";
+    } catch (error) {
+        adminSaveFeedback.textContent = "No se pudo subir la imagen.";
     }
 });
 
@@ -376,13 +442,13 @@ loadSiteContent()
             currentData = { ...defaults, ...data };
             applyContent(currentData);
             syncEditor(currentData);
-            adminStatus("Contenido cargado desde Firestore");
+            firebaseStatus.textContent = "Contenido cargado desde Firestore";
         } else {
-            adminStatus("Firebase listo, sin contenido guardado");
+            firebaseStatus.textContent = "Firebase listo, sin contenido guardado";
         }
     })
     .catch(() => {
-        adminStatus("Firebase listo, pero no se pudo leer el contenido");
+        firebaseStatus.textContent = "Firebase listo, pero no se pudo leer el contenido";
     });
 
 onFirebaseAuthChange((user) => {
@@ -391,17 +457,16 @@ onFirebaseAuthChange((user) => {
 
     if (user && user.email === adminConfig.adminEmail) {
         editorUser.textContent = `Sesión: ${user.email}`;
-        adminLoginForm.hidden = true;
-        adminEditor.hidden = false;
         syncEditor(currentData);
+        if (!adminModal.hidden && adminLoginForm.hidden) {
+            setModalMode("editor");
+        }
     } else if (user) {
         editorUser.textContent = `Cuenta no autorizada: ${user.email}`;
-        adminLoginForm.hidden = true;
-        adminEditor.hidden = true;
+        closeModal();
         adminSaveFeedback.textContent = "Ese correo no tiene permiso para editar.";
     } else {
         editorUser.textContent = "Sin sesión";
-        adminLoginForm.hidden = false;
-        adminEditor.hidden = true;
+        closeModal();
     }
 });
