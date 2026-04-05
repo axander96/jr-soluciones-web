@@ -4,31 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JR Soluciones</title>
-    <meta name="description" content="JR Soluciones, con historia, colecciones, misiÃ³n, visiÃ³n, valores y contacto directo por WhatsApp.">
+    <meta name="description" content="JR Soluciones, con historia, colecciones, misión, visión, valores y contacto directo por WhatsApp.">
     <link rel="preconnect" href="https://firebasestorage.googleapis.com">
     <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <aside class="admin-panel" id="adminPanel" aria-label="Panel de administraciÃ³n">
+    <aside class="admin-panel" id="adminPanel" aria-label="Panel de administración">
         <button class="admin-toggle" id="adminToggle" aria-expanded="true" aria-controls="adminContent">
             <span class="admin-badge">JR</span>
             <span class="admin-label">Admin</span>
         </button>
 
         <div class="admin-content" id="adminContent">
-            <p class="admin-title">Panel rÃ¡pido</p>
+            <p class="admin-title">Panel rápido</p>
             <p class="admin-status" id="firebaseStatus" hidden aria-hidden="true">Firebase: pendiente de configurar</p>
-            <button type="button" id="adminLoginBtn">Iniciar sesiÃ³n</button>
+            <button type="button" id="adminLoginBtn">Iniciar sesión</button>
             <button type="button" id="adminEditBtn" hidden>Editar contenido</button>
-            <button type="button" id="adminLogoutBtn" hidden>Cerrar sesiÃ³n</button>
+            <button type="button" id="adminLogoutBtn" hidden>Cerrar sesión</button>
         </div>
     </aside>
 
     <div class="edit-bar" id="editBar" hidden>
         <div>
-            <strong>Modo ediciÃ³n</strong>
-            <p id="editBarStatus">La pÃ¡gina se puede editar directamente sobre la vista real.</p>
+            <strong>Modo edición</strong>
+            <p id="editBarStatus">La página se puede editar directamente sobre la vista real.</p>
         </div>
         <div class="edit-bar__actions">
             <button type="button" class="btn-primary" id="adminSaveInlineBtn">Guardar cambios</button>
@@ -178,7 +178,7 @@
         <section class="section-block about" id="nosotros">
             <div class="section-heading">
                 <span class="eyebrow">Nosotros</span>
-                <h2>MisiÃ³n, visiÃ³n y valores</h2>
+                <h2>misión, visión y valores</h2>
             </div>
 
             <div class="about-grid">
@@ -205,7 +205,7 @@
                 <p class="owner-role" data-bind="ownerRole">Propietario y Gerente General</p>
                 <p class="owner-contact-title" data-bind="ownerContactTitle">Contacto</p>
                 <p><strong>Celular:</strong> <a href="tel:+18095550123" data-bind="ownerPhone" data-bind-href="ownerPhoneHref">+1 (809) 555-0123</a></p>
-                <p class="owner-visit-title" data-bind="ownerVisitTitle">Vis&#237;tanos</p>
+                <p class="owner-visit-title" data-bind="ownerVisitTitle">Visítanos</p>
                 <p class="owner-address"><strong>DirecciÃ³n:</strong> <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" data-bind="ownerAddress" data-bind-href="ownerAddressHref">Calle Principal #123, Santo Domingo, RepÃºblica Dominicana</a></p>
             </div>
             <div class="owner-socials" aria-label="Redes sociales">
@@ -236,7 +236,7 @@
         <div class="admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
             <div class="admin-modal__header">
                 <div>
-                    <p class="eyebrow">AdministraciÃ³n</p>
+                    <p class="eyebrow">administración</p>
                     <h2 id="adminModalTitle">Editar contenido del sitio</h2>
                 </div>
                 <button type="button" class="icon-button" data-admin-close aria-label="Cerrar editor">Ã—</button>
@@ -277,4 +277,5 @@
     <script type="module" src="main.js"></script>
 </body>
 </html>
+
 
