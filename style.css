@@ -450,7 +450,7 @@ main {
 }
 
 .owner-contact-title {
-    margin: 42px 0 2px;
+    margin: 52px 0 2px;
     color: #000;
     font-size: 0.95rem;
     font-weight: 800;
@@ -506,7 +506,7 @@ main {
 }
 
 .owner-content > p:nth-of-type(5) {
-    color: var(--muted);
+    color: #24384f;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -516,7 +516,7 @@ main {
 }
 
 .owner-content > p:nth-of-type(5) a {
-    color: var(--navy);
+    color: #1b2f44;
 }
 
 .owner-address a {
