@@ -450,7 +450,7 @@ main {
 }
 
 .owner-contact-title {
-    margin: 68px 0 2px;
+    margin: 24px 0 4px;
     color: #000;
     font-size: 0.95rem;
     font-weight: 800;
@@ -469,9 +469,9 @@ main {
 
 .owner-role {
     margin-top: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--text);
 }
 
 .owner-content > p {
@@ -484,8 +484,8 @@ main {
 }
 
 .owner-content > p:nth-of-type(3) {
-    color: var(--navy);
-    margin-top: 2px;
+    color: var(--text);
+    margin-top: 0;
     margin-bottom: 2px;
 }
 
@@ -494,7 +494,7 @@ main {
 }
 
 .owner-content > p:nth-of-type(3) a {
-    color: #1b2f44;
+    color: var(--text);
 }
 
 .owner-content > p:nth-of-type(4) {
@@ -507,7 +507,7 @@ main {
 }
 
 .owner-content > p:nth-of-type(4) a {
-    color: #1b2f44;
+    color: var(--text);
 }
 
 .owner-address a {
@@ -517,6 +517,10 @@ main {
 
 .owner-address a:hover {
     text-decoration: underline;
+}
+
+.owner-content .owner-contact-title + p {
+    margin-top: 0;
 }
 
 .owner-map-field {

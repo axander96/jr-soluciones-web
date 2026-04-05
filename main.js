@@ -102,7 +102,7 @@ const defaults = {
     valuesDescription: "Honestidad, compromiso, buen gusto, responsabilidad y servicio personalizado.",
     ownerName: "Juan Rodríguez",
     ownerRole: "Propietario y Gerente General",
-    ownerContactTitle: "Contactanos",
+    ownerContactTitle: "Contacto",
     ownerPhone: "+1 (809) 555-0123",
     ownerPhoneHref: "tel:+18095550123",
     ownerWhatsApp: "https://wa.me/18095550123",
