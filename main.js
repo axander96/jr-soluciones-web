@@ -345,9 +345,11 @@ ownerMapHrefInput?.addEventListener("input", () => {
 const normalizeContactData = (data = {}) => {
     const phoneValue = String(data.ownerPhone ?? defaults.ownerPhone);
     const phoneDigits = normalizePhone(phoneValue);
+    const contactTitle = String(data.ownerContactTitle ?? defaults.ownerContactTitle);
 
     return {
         ...data,
+        ownerContactTitle: contactTitle.toLowerCase() === "contacto" ? "Contactanos" : contactTitle,
         ownerPhone: phoneValue,
         ownerPhoneHref: `tel:${phoneDigits}`,
         ownerWhatsApp: `https://wa.me/${phoneDigits}`,
